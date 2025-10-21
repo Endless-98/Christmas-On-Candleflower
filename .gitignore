@@ -9,6 +9,8 @@ node_modules/
 # Vite
 client/dist/
 client/.vite/
+site/dist/
+site/.vite/
 
 # Build artifacts
 server/build/

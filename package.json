@@ -2,13 +2,17 @@
   "name": "christmasoncandleflower",
   "private": true,
   "version": "0.1.0",
-  "workspaces": ["client", "server"],
   "engines": { "node": ">=18.0.0" },
   "scripts": {
-    "dev": "npm run dev -w client",
-    "dev:server": "npm run dev -w server",
-    "dev:all": "npm run dev -w server & npm run dev -w client",
-    "build": "npm run build -w client",
-    "start": "npm run start -w server"
+    "dev": "npm --prefix site run dev",
+    "build": "npm --prefix site run build",
+    "preview": "npm --prefix site run preview",
+    "start": "npm --prefix site run preview",
+    "dev:server": "npm --prefix archive/server run dev",
+    "start:server": "npm --prefix archive/server run start",
+    "dev:all": "concurrently \"npm run dev:server\" \"npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
   }
 }
