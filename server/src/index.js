@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { randomUUID } from 'crypto';
 
 dotenv.config();
 
@@ -31,7 +32,8 @@ app.post(`${API_BASE}/items`, (req, res) => {
     if (!name || !name.trim()) {
       return res.status(400).json({ error: 'name required' });
     }
-    const doc = { _id: crypto.randomUUID(), name: name.trim(), createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+  const now = new Date().toISOString();
+  const doc = { _id: randomUUID(), name: name.trim(), createdAt: now, updatedAt: now };
     items.push(doc);
     res.status(201).json(doc);
   } catch (e) {
