@@ -1,0 +1,14 @@
+{
+  "name": "christmasoncandleflower",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["client", "server"],
+  "engines": { "node": ">=18.0.0" },
+  "scripts": {
+    "dev": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "dev:all": "npm run dev -w server & npm run dev -w client",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server"
+  }
+}
