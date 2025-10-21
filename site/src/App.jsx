@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function App() {
-  const rawQuery = import.meta.env.VITE_MAP_QUERY || 'Candleflower Circle 80920 Colorado Springs';
-  const encodedQuery = encodeURIComponent(rawQuery);
+  const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
+  const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
   // Priority: full embed URL -> API key + Embed API -> public q= fallback
   const embedUrl = import.meta.env.VITE_MAP_EMBED_URL;
@@ -34,8 +34,8 @@ export default function App() {
           <li>Daily: Dusk — 10:00 PM</li>
         </ul>
 
-        <h2>Location</h2>
-        <p className="muted">Candleflower Circle 80920, Colorado Springs</p>
+  <h2>Location</h2>
+  <p className="muted">Location: {import.meta.env.VITE_MAP_QUERY}</p>
 
         <div className="map-wrapper" aria-hidden={false}>
           <iframe
