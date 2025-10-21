@@ -31,6 +31,10 @@ jobs:
       - name: Build site
         env:
           VITE_BASE_URL: "/${{ github.event.repository.name }}/"
+          VITE_MAP_EMBED_URL: ${{ secrets.VITE_MAP_EMBED_URL }}
+          VITE_GOOGLE_MAPS_IFRAME_URL: ${{ secrets.VITE_GOOGLE_MAPS_IFRAME_URL }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_MAP_QUERY: ${{ vars.VITE_MAP_QUERY }}
         run: npm --prefix site run build
 
       - name: Setup Pages

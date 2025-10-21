@@ -4,8 +4,8 @@ export default function App() {
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
-  // Priority: full embed URL -> API key + Embed API -> public q= fallback
-  const embedUrl = import.meta.env.VITE_MAP_EMBED_URL;
+  // Priority: full embed URL (two supported names) -> API key + Embed API -> public q= fallback
+  const embedUrl = import.meta.env.VITE_MAP_EMBED_URL || import.meta.env.VITE_GOOGLE_MAPS_IFRAME_URL;
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   let mapSrc;
   if (embedUrl) {
