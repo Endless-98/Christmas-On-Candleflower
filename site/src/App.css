@@ -7,21 +7,22 @@
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
-body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background-color: var(--bg); color: var(--fg); 
-  /* background image provided via index.html using %BASE_URL% so it resolves on GitHub Pages and other hosts */
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background-color: var(--bg); color: var(--fg); }
+
+/* Use a fixed, full-viewport pseudo-element for the background image. This
+   approach works more consistently across mobile browsers (where
+   background-attachment: fixed is often ignored) while keeping the image
+   visually fixed during scroll. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
   background-image: var(--bg-img-url);
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
-  /* Keep background visually fixed on larger screens for a subtle parallax-like feel.
-     Disable on small screens for performance and better UX on mobile devices. */
-}
-
-@media (min-width: 640px) {
-  body {
-    background-attachment: fixed;
-    -webkit-background-attachment: fixed;
-  }
+  z-index: -1;
+  pointer-events: none;
 }
 
 .container { max-width: 760px; margin: 0 auto; padding: 2rem; }
