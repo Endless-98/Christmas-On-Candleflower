@@ -10,7 +10,33 @@ html, body, #root { height: 100%; }
 body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--fg); }
 
 .container { max-width: 760px; margin: 0 auto; padding: 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 2rem; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; 
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02);
+  /* Stretch the header slightly wider than the centered container for a card-like feel */
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
 header h1 { margin: 0 0 0.25rem; font-size: 2rem; }
+header nav { display: flex; gap: 0.5rem; align-items: center; }
+header nav a { color: var(--fg); text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.95rem; }
+header nav a:hover { background: rgba(255,255,255,0.02); color: var(--accent); }
+
+/* Slight visual segmentation between title and nav on wider screens */
+header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px solid rgba(255,255,255,0.03); }
+
+/* Responsive: stack on small widths */
+@media (max-width: 640px) {
+  header { flex-direction: column; align-items: flex-start; width: 100%; margin-left: 0; margin-right: 0; }
+  header > div { border-right: none; padding-right: 0; margin-right: 0; margin-bottom: 0.5rem; }
+  header nav { width: 100%; display: flex; gap: 0.5rem; }
+}
+
 .tag { margin: 0; color: var(--muted); }
 
 .status { display: flex; gap: 1rem; align-items: baseline; margin: 1rem 0 2rem; }
@@ -26,3 +52,43 @@ header h1 { margin: 0 0 0.25rem; font-size: 2rem; }
 
 .map-wrapper { margin-top: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid #1f2937; }
 .map-wrapper iframe { width: 100%; height: 320px; border: 0; display: block; }
+
+.now-playing {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  max-width: 720px;
+  margin: 0.5rem auto 1rem;
+}
+.np-art {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  font-size: 20px;
+}
+.np-info {
+  flex: 1 1 auto;
+}
+.np-track {
+  font-weight: 600;
+}
+.np-artist {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+}
+.np-actions {
+  margin-left: 8px;
+}
+.np-spotify {
+  color: var(--link, #9be7ff);
+  text-decoration: none;
+}
+.muted { opacity: 0.7 }
