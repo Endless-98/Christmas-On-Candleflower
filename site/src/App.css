@@ -7,7 +7,13 @@
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
-body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--fg); }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background-color: var(--bg); color: var(--fg); 
+  /* background image provided via index.html using %BASE_URL% so it resolves on GitHub Pages and other hosts */
+  background-image: var(--bg-img-url);
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+}
 
 .container { max-width: 760px; margin: 0 auto; padding: 2rem; }
 .container { max-width: 760px; margin: 0 auto; padding: 2rem; }
@@ -24,8 +30,16 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 }
 header h1 { margin: 0 0 0.25rem; font-size: 2rem; }
 header nav { display: flex; gap: 0.5rem; align-items: center; }
-header nav a { color: var(--fg); text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.95rem; }
+header nav a { color: var(--fg); text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 1.2rem; }
 header nav a:hover { background: rgba(255,255,255,0.02); color: var(--accent); }
+
+/* Logo sizing inside the h1 - keeps semantics but uses an image */
+.site-title { margin: 0; }
+.site-title img { height: calc(48px * 2); width: auto; display: block; transform-origin: left center; }
+
+@media (min-width: 900px) {
+  .site-title img { height: calc(56px * 2); }
+}
 
 /* Slight visual segmentation between title and nav on wider screens */
 header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px solid rgba(255,255,255,0.03); }

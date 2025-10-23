@@ -63,7 +63,7 @@ export default function App() {
 
   // Priority: full embed URL (two supported names) -> API key + Embed API -> public q= fallback
     const rawEmbed = import.meta.env.VITE_MAP_EMBED_URL || import.meta.env.VITE_GOOGLE_MAPS_IFRAME_URL || '';
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
     // Normalize embed URL: if a non-absolute value is provided, treat it as a query string and construct a Google Maps embed
     const normalizeEmbed = (val) => {
       if (!val) return '';
@@ -97,12 +97,13 @@ export default function App() {
       <div className="container">
         <header>
           <div>
-            <h1>Christmas On Candleflower</h1>
-            <p className="tag">A neighborhood Christmas light show — welcome!</p>
+            <h1 className="site-title">
+              <img src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="Christmas On Candleflower" />
+            </h1>
           </div>
           <nav aria-label="Primary">
             <a href="#/">Home</a>
-            <a href="#/about">About Us</a>
+            <a href="#/about">About</a>
             <a href="#/contact">Contact Us</a>
           </nav>
         </header>
