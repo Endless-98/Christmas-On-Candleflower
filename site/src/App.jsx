@@ -102,17 +102,24 @@ export default function App() {
       if (!vv) return undefined;
 
       const applyOffset = () => {
-        // offsetTop is the visual viewport's offset from the layout viewport.
-        // We apply the negative of this so the background moves with the content.
-        const offset = vv.offsetTop || 0;
-        document.documentElement.style.setProperty('--vv-offset', `${-offset}px`);
+        // Two ways mobile browsers report UI shifts:
+        // 1) offsetTop changes (distance between layout and visual viewport top)
+        // 2) pageTop diverges from window.scrollY while the chrome animates
+        // Prefer offsetTop when non-zero; else use the difference (scrollY - pageTop).
+        let offsetPx = 0;
+        if (typeof vv.offsetTop === 'number' && vv.offsetTop !== 0) {
+          offsetPx = -vv.offsetTop;
+        } else if (typeof vv.pageTop === 'number') {
+          offsetPx = window.scrollY - vv.pageTop;
+        }
+        document.documentElement.style.setProperty('--vv-offset', `${offsetPx || 0}px`);
       };
 
       applyOffset();
       vv.addEventListener('resize', applyOffset);
       vv.addEventListener('scroll', applyOffset);
-      // Keep a window scroll listener as a fallback
-      window.addEventListener('scroll', applyOffset);
+      // As a fallback, update on page scroll too
+      window.addEventListener('scroll', applyOffset, { passive: true });
 
       return () => {
         vv.removeEventListener('resize', applyOffset);
