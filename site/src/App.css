@@ -3,6 +3,7 @@
   --fg: #e2e8f0;
   --muted: #94a3b8;
   --accent: #38bdf8;
+  --hover-link: #f0a5dd;
 }
 
 * { box-sizing: border-box; }
@@ -49,7 +50,7 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 header h1 { margin: 0 0 0.25rem; font-size: 2rem; }
 header nav { display: flex; gap: 0.5rem; align-items: center; }
 header nav a { color: var(--fg); text-decoration: none; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 1.2rem; }
-header nav a:hover { background: rgba(255,255,255,0.02); color: var(--accent); }
+header nav a:hover { background: rgba(255,255,255,0.02); color: var(--hover-link); }
 
 /* Logo sizing inside the h1 - keeps semantics but uses an image */
 .site-title { margin: 0; }
@@ -123,4 +124,8 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   color: var(--link, #9be7ff);
   text-decoration: none;
 }
+.np-spotify:hover { color: var(--hover-link); }
+
+/* Generic hovered link color so all anchors get the requested hue */
+a:hover { color: var(--hover-link); }
 .muted { opacity: 0.7 }
