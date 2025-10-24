@@ -70,6 +70,14 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   header nav { width: 100%; display: flex; gap: 0.5rem; }
 }
 
+/* Center the logo (and nav) when the device is in portrait orientation */
+@media (orientation: portrait) {
+  header { flex-direction: column; align-items: center; }
+  header > div { border-right: none; padding-right: 0; margin-right: 0; text-align: center; }
+  .site-title img { margin-left: auto; margin-right: auto; }
+  header nav { width: 100%; justify-content: center; }
+}
+
 .tag { margin: 0; color: var(--muted); }
 
 .status { display: flex; gap: 1rem; align-items: baseline; margin: 1rem 0 2rem; }
