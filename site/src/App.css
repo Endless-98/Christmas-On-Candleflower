@@ -16,7 +16,13 @@ body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helve
 body::before {
   content: "";
   position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Use a stable viewport height to avoid jumping when browser chrome shows/hides */
+  height: 100vh;   /* fallback */
+  height: 100dvh;  /* dynamic viewport (supported browsers) */
+  height: 100svh;  /* stable/smallest viewport to prevent resize jumps */
   background-image: var(--bg-img-url);
   background-repeat: no-repeat;
   background-position: center top;
