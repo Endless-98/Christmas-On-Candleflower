@@ -105,12 +105,14 @@ export default function App() {
         // Two ways mobile browsers report UI shifts:
         // 1) offsetTop changes (distance between layout and visual viewport top)
         // 2) pageTop diverges from window.scrollY while the chrome animates
-        // Prefer offsetTop when non-zero; else use the difference (scrollY - pageTop).
+        // We want the background to move in the SAME direction as the content shift.
+        // That means applying a POSITIVE translateY equal to the visual viewport's
+        // top offset relative to the layout viewport.
         let offsetPx = 0;
         if (typeof vv.offsetTop === 'number' && vv.offsetTop !== 0) {
-          offsetPx = -vv.offsetTop;
+          offsetPx = vv.offsetTop;
         } else if (typeof vv.pageTop === 'number') {
-          offsetPx = window.scrollY - vv.pageTop;
+          offsetPx = vv.pageTop - window.scrollY;
         }
         document.documentElement.style.setProperty('--vv-offset', `${offsetPx || 0}px`);
       };
