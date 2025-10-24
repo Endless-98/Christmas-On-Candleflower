@@ -93,6 +93,35 @@ export default function App() {
       return () => window.removeEventListener('hashchange', onHash);
     }, []);
 
+    // On mobile browsers (Chrome) the visual viewport can shift when the URL/search
+    // chrome shows/hides, causing the page content to move relative to the fixed
+    // background. Use the Visual Viewport API (when available) to nudge the
+    // background pseudo-element so it stays visually aligned with the page content.
+    useEffect(() => {
+      const vv = window.visualViewport;
+      if (!vv) return undefined;
+
+      const applyOffset = () => {
+        // offsetTop is the visual viewport's offset from the layout viewport.
+        // We apply the negative of this so the background moves with the content.
+        const offset = vv.offsetTop || 0;
+        document.documentElement.style.setProperty('--vv-offset', `${-offset}px`);
+      };
+
+      applyOffset();
+      vv.addEventListener('resize', applyOffset);
+      vv.addEventListener('scroll', applyOffset);
+      // Keep a window scroll listener as a fallback
+      window.addEventListener('scroll', applyOffset);
+
+      return () => {
+        vv.removeEventListener('resize', applyOffset);
+        vv.removeEventListener('scroll', applyOffset);
+        window.removeEventListener('scroll', applyOffset);
+        document.documentElement.style.removeProperty('--vv-offset');
+      };
+    }, []);
+
     return (
       <div className="container">
         <header>
