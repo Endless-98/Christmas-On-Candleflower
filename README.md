@@ -82,10 +82,3 @@ Optional: run the server for API demos
 npm run dev:server    # runs the Express server in watch mode
 npm run start:server  # run production server
 ```
-
-Next steps
-
-- If you want to remove the server entirely, we can either delete the `server/` folder or move its code into an `archive/` folder and remove server scripts. I can do that for you if you prefer.
-- If you'd like the site served from the repository root (no `client/` prefix), I can move the client files to the root and update scripts.
-
-Contact me with how you'd like to proceed and I'll make the changes.
