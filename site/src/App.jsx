@@ -149,7 +149,7 @@ export default function App() {
         {route === '/about' && <About />}
         {route === '/contact' && <Contact />}
         {route === '/' && <Home mapSrc={mapSrc} />}
-        {/* default fallback: home */}
+        {/* default fallback: home */}1
         {(route !== '/' && route !== '/about' && route !== '/contact') && <Home mapSrc={mapSrc} />}
       </div>
     );

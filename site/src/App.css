@@ -8,6 +8,8 @@
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
+/* Reserve space for the vertical scrollbar so width doesn't shift between pages */
+html { scrollbar-gutter: stable both-edges; }
 body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background-color: var(--bg); color: var(--fg); }
 
 /* Use a fixed, full-viewport pseudo-element for the background image. This
