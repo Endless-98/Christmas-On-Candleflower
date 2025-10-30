@@ -1,53 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import About from './About';
 import Contact from './Contact';
+import Playlist from './Playlist';
 
 function Home({ mapSrc }) {
   return (
-    <section style={{marginTop: '1rem'}}>
-      <p>
+    <section style={{marginTop: '0.5rem'}}>
+      <p style={{marginBottom: '1rem', fontSize: '0.95rem', lineHeight: '1.4'}}>
         Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from dusk until 10pm.
       </p>
 
-      <h2>Schedule</h2>
-      <ul className="items">
-        <li>Daily: Dusk — 10:00 PM</li>
-      </ul>
+      <div className="home-grid">
+        <div className="home-section">
+          <h3 style={{marginTop: 0, marginBottom: '0.5rem', fontSize: '1.1rem'}}>🗓️ Schedule</h3>
+          <ul className="items-compact">
+            <li>Daily: Dusk — 10:00 PM</li>
+          </ul>
+        </div>
 
-      <h2 id="playlist">Now Playing</h2>
-      <div className="now-playing">
-        <div className="np-art" aria-hidden>
-          🎵
-        </div>
-        <div className="np-info">
-          <div className="np-track">No track playing</div>
-          <div className="np-artist muted">Not connected</div>
-        </div>
-        <div className="np-actions">
-          <a className="np-spotify muted" href="#" aria-disabled>Open in Spotify</a>
+        <div className="home-section">
+          <h3 style={{marginTop: 0, marginBottom: '0.5rem', fontSize: '1.1rem'}}>🎵 Now Playing</h3>
+          <div className="now-playing-compact">
+            <div className="np-art-compact" aria-hidden>
+              🎵
+            </div>
+            <div className="np-info-compact">
+              <div className="np-track-compact">No track playing</div>
+              <div className="np-artist-compact muted">Not connected</div>
+            </div>
+            <div className="np-actions-compact">
+              <a className="np-spotify-compact muted" href="#" aria-disabled>Spotify</a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <h2>Location</h2>
-      <p className="muted">Candleflower neighborhood — see the embedded map for the exact spot.</p>
+      <div className="location-section">
+        <h3 style={{marginTop: '1rem', marginBottom: '0.5rem', fontSize: '1.1rem'}}>📍 Location</h3>
+        <p className="muted" style={{fontSize: '0.85rem', marginBottom: '0.5rem'}}>{import.meta.env.VITE_MAP_QUERY}</p>
 
-      <div className="map-wrapper" aria-hidden={!mapSrc}>
-        {mapSrc ? (
-          <iframe
-            title="Candleflower location"
-            src={mapSrc}
-            width="600"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        ) : (
-          <div className="muted" style={{marginTop: '0.5rem'}}>
-            Map is not configured. Set one of VITE_MAP_EMBED_URL, VITE_GOOGLE_MAPS_IFRAME_URL, or VITE_MAP_QUERY in the build environment.
-          </div>
-        )}
+        <div className="map-wrapper-compact" aria-hidden={!mapSrc}>
+          {mapSrc ? (
+            <iframe
+              title="Candleflower location"
+              src={mapSrc}
+              width="100%"
+              height="200"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : (
+            <div className="muted" style={{marginTop: '0.5rem', fontSize: '0.85rem'}}>
+              Map is not configured. Set one of VITE_MAP_EMBED_URL, VITE_GOOGLE_MAPS_IFRAME_URL, or VITE_MAP_QUERY in the build environment.
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -140,17 +149,19 @@ export default function App() {
             </h1>
           </div>
           <nav aria-label="Primary">
-            <a href="#/">Home</a>
-            <a href="#/about">About</a>
-            <a href="#/contact">Contact Us</a>
+            <a href="#/" className={route === '/' ? 'nav-link active' : 'nav-link'}>Home</a>
+            <a href="#/about" className={route === '/about' ? 'nav-link active' : 'nav-link'}>About</a>
+            <a href="#/playlist" className={route === '/playlist' ? 'nav-link active' : 'nav-link'}>Playlist</a>
+            <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact Us</a>
           </nav>
         </header>
 
         {route === '/about' && <About />}
+        {route === '/playlist' && <Playlist />}
         {route === '/contact' && <Contact />}
         {route === '/' && <Home mapSrc={mapSrc} />}
-        {/* default fallback: home */}1
-        {(route !== '/' && route !== '/about' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {/* default fallback: home */}
+        {(route !== '/' && route !== '/about' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
       </div>
     );
   }
