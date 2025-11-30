@@ -49,73 +49,95 @@ export default function Contact() {
   };
 
   return (
-    <section style={{marginTop: '0.5rem'}}>
-      <h2 style={{marginBottom: '0.5rem'}}>Get in Touch</h2>
-      <p style={{fontSize: '1rem', marginBottom: '1rem', color: 'var(--muted)'}}>
+    <section style={{marginTop: '1rem'}}>
+      <h2>💌 Get in Touch</h2>
+      <p style={{fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.6'}}>
         Questions, song requests, or feedback? We'd love to hear from you!
       </p>
       
-      <div className="contact-form-wrapper-compact">
-        <form onSubmit={handleSubmit} className="contact-form-compact">
-          <div className="form-row">
-            <div className="form-group-half">
-              <label htmlFor="name">Name <span className="optional">(optional)</span></label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="contact-input-compact"
-                placeholder="Your name"
-              />
+      {submitStatus === 'success' && (
+        <div className="alert-success">
+          <div className="alert-icon">✨</div>
+          <div className="alert-content">
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for reaching out! We'll get back to you soon if you provided an email address.</p>
+          </div>
+        </div>
+      )}
+      
+      {submitStatus === 'error' && (
+        <div className="alert-error">
+          <div className="alert-icon">⚠️</div>
+          <div className="alert-content">
+            <h3>Oops! Something went wrong</h3>
+            <p>We couldn't send your message. Please try again later or contact us directly.</p>
+          </div>
+        </div>
+      )}
+
+      <div className="contact-layout">
+        <div className="contact-form-section">
+          <form onSubmit={handleSubmit} className="modern-contact-form">
+            <div className="form-row">
+              <div className="form-field">
+                <label htmlFor="name">
+                  Name <span className="label-hint">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="form-input"
+                  placeholder="Your name"
+                />
+              </div>
+              
+              <div className="form-field">
+                <label htmlFor="email">
+                  Email <span className="label-hint">(optional for replies)</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="form-input"
+                  placeholder="your.email@example.com"
+                />
+              </div>
             </div>
             
-            <div className="form-group-half">
-              <label htmlFor="email">Email <span className="optional">(optional)</span></label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
+            <div className="form-field">
+              <label htmlFor="message">
+                Message <span className="label-required">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
                 onChange={handleChange}
-                className="contact-input-compact"
-                placeholder="your.email@example.com"
-              />
+                required
+                className="form-textarea"
+                placeholder="Share your experience, request a song, ask questions, or let us know how we can improve the show!"
+                rows="7"
+              ></textarea>
             </div>
-          </div>
-          
-          <div className="form-group-compact">
-            <label htmlFor="message">Message <span className="required">*</span></label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              className="contact-textarea-compact"
-              placeholder="Share your experience, request a song, or ask any questions! We'd love to hear from you!"
-              rows="8"
-            ></textarea>
-          </div>
-          
-          <button type="submit" className="submit-btn-compact" disabled={isSubmitting}>
-            {isSubmitting ? '✨ Sending...' : '🎄 Send Message'}
-          </button>
-        </form>
-
-        {submitStatus === 'success' && (
-          <div className="status-message success compact">
-            ✅ Message sent! Thank you for reaching out!
-          </div>
-        )}
-        
-        {submitStatus === 'error' && (
-          <div className="status-message error compact">
-            ❌ Failed to send. Please try again later.
-          </div>
-        )}
-
+            
+            <button type="submit" className="form-submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <span className="btn-spinner"></span>
+                  Sending...
+                </>
+              ) : (
+                <>🎄 Send Message</>
+              )}
+            </button>
+          </form>
+        </div>
       </div>
     </section>
   );
