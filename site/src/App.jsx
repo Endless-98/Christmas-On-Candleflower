@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import About from './About';
 import Contact from './Contact';
+import Playlist from './Playlist';
 
 function Home({ mapSrc }) {
   return (
@@ -29,7 +30,7 @@ function Home({ mapSrc }) {
       </div>
 
       <h2>Location</h2>
-      <p className="muted">Candleflower neighborhood — see the embedded map for the exact spot.</p>
+      <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
 
       <div className="map-wrapper" aria-hidden={!mapSrc}>
         {mapSrc ? (
@@ -140,17 +141,19 @@ export default function App() {
             </h1>
           </div>
           <nav aria-label="Primary">
-            <a href="#/">Home</a>
-            <a href="#/about">About</a>
-            <a href="#/contact">Contact Us</a>
+            <a href="#/" className={route === '/' ? 'nav-link active' : 'nav-link'}>Home</a>
+            <a href="#/about" className={route === '/about' ? 'nav-link active' : 'nav-link'}>About</a>
+            <a href="#/playlist" className={route === '/playlist' ? 'nav-link active' : 'nav-link'}>Playlist</a>
+            <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact Us</a>
           </nav>
         </header>
 
         {route === '/about' && <About />}
+        {route === '/playlist' && <Playlist />}
         {route === '/contact' && <Contact />}
         {route === '/' && <Home mapSrc={mapSrc} />}
-        {/* default fallback: home */}1
-        {(route !== '/' && route !== '/about' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {/* default fallback: home */}
+        {(route !== '/' && route !== '/about' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
       </div>
     );
   }
