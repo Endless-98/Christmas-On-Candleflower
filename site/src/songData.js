@@ -5,152 +5,157 @@ export const songDatabase = {
   "01 - Intro": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/intro.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Gracechase - EventBetterChristmas": {
     displayName: "Even Better Christmas",
     artist: "Gracechase",
-    albumArt: "/assets/album-art/gracechase.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
   },
   "03 - Transition 1": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "All I Need For Christmas": {
     displayName: "All I Need For Christmas",
     artist: "Toby Mac",
-    albumArt: "/assets/album-art/all-i-need.jpg"
+    albumArt: "/assets/AlbumImages/All I Need For Christmas - Toby Mac & Terrain.png"
   },
   "05 - Transition 2": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Carol of the Bells": {
     displayName: "Carol of the Bells",
     artist: "Lindsey Stirling",
-    albumArt: "/assets/album-art/carol-bells.jpg"
+    albumArt: "/assets/AlbumImages/Snow Waltz - Lindsey Stirling.png"
   },
   "07 - Transition 3": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Feels Like Joy": {
     displayName: "Feels Like Joy",
     artist: "Micah Tyler",
-    albumArt: "/assets/album-art/feels-like-joy.jpg"
+    albumArt: "/assets/AlbumImages/Micah Tyler - Feels Like Joy.png"
   },
   "09 - Transition 4": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Star Wars Medley": {
     displayName: "Star Wars Medley",
     artist: "John Williams",
-    albumArt: "/assets/album-art/star-wars.jpg"
+    albumArt: "/assets/AlbumImages/Star Wars OST.png"
   },
   "11 - Transition 5": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "God Rest Ye Merry Gentlemen": {
     displayName: "God Rest Ye Merry Gentlemen",
     artist: "Pentatonix",
-    albumArt: "/assets/album-art/god-rest.jpg"
+    albumArt: "/assets/AlbumImages/The Best of Pentatonix Christmas - Pentatonix.png"
   },
   "13 - Transition 6": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Christmas Party (All the Way)": {
     displayName: "Christmas Party (All the Way)",
     artist: "Gracechase",
-    albumArt: "/assets/album-art/christmas-party.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
   },
   "15 - Transition 7": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Sounding Joy": {
     displayName: "Sounding Joy",
     artist: "Ellie Holcomb",
-    albumArt: "/assets/album-art/sounding-joy.jpg"
+    albumArt: "/assets/AlbumImages/Sounding Joy - Ellie Holcomb.jpg"
   },
   "17 - Transition 8": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Light of Christmas": {
     displayName: "Light of Christmas",
     artist: "TobyMac",
-    albumArt: "/assets/album-art/light-of-christmas.jpg"
+    albumArt: "/assets/AlbumImages/Light of Christmas - Toby Mac.jpg"
   },
   "19 - Transition 9": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Ring the Bells": {
     displayName: "Ring the Bells",
     artist: "Big Daddy Weave ft. Meridith Andrews",
-    albumArt: "/assets/album-art/ring-bells.jpg"
+    albumArt: "/assets/AlbumImages/Ring The Bells - Big Daddy Weeve.png"
   },
   "23 - Transition 11": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Call of Duty": {
     displayName: "Call of Duty Medley",
     artist: "Game Soundtrack",
-    albumArt: "/assets/album-art/call-of-duty.jpg"
+    albumArt: "/assets/AlbumImages/Call of Duty Black Ops 7 OST - Jack Wall.png"
   },
   "25 - Transition 12": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Joy He Shall Reign": {
     displayName: "Joy! He Shall Reign",
     artist: "Big Daddy Weave",
-    albumArt: "/assets/album-art/joy-reign.jpg"
+    albumArt: "/assets/AlbumImages/BigDaddyWeave - Joy He Shall Reign.png"
   },
   "27 - Transition 13": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Christmas Every Day": {
     displayName: "Christmas Every Day",
     artist: "Simple Plan",
-    albumArt: "/assets/album-art/christmas-every-day.jpg"
+    albumArt: "/assets/AlbumImages/Simple Plan - Christmas Every Day.jpg"
   },
   "29 - Transition 14": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/transition.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "To Hear the Angels Sing": {
     displayName: "To Hear the Angels Sing",
     artist: "Gracechase",
-    albumArt: "/assets/album-art/angels-sing.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
   },
   "31 - Outro": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/outro.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
+  },
+  "Projectors ON": {
+    displayName: "Lanny and Wayne",
+    artist: "",
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
   "Countdown": {
     displayName: "Lanny and Wayne",
     artist: "",
-    albumArt: "/assets/album-art/system.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   }
 };
 
