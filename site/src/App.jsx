@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import About from './About';
 import Contact from './Contact';
 import Playlist from './Playlist';
 
@@ -23,9 +22,6 @@ function Home({ mapSrc }) {
         <div className="np-info">
           <div className="np-track">No track playing</div>
           <div className="np-artist muted">Not connected</div>
-        </div>
-        <div className="np-actions">
-          <a className="np-spotify muted" href="#" aria-disabled>Open in Spotify</a>
         </div>
       </div>
 
@@ -142,18 +138,16 @@ export default function App() {
           </div>
           <nav aria-label="Primary">
             <a href="#/" className={route === '/' ? 'nav-link active' : 'nav-link'}>Home</a>
-            <a href="#/about" className={route === '/about' ? 'nav-link active' : 'nav-link'}>About</a>
             <a href="#/playlist" className={route === '/playlist' ? 'nav-link active' : 'nav-link'}>Playlist</a>
             <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact Us</a>
           </nav>
         </header>
 
-        {route === '/about' && <About />}
         {route === '/playlist' && <Playlist />}
         {route === '/contact' && <Contact />}
         {route === '/' && <Home mapSrc={mapSrc} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/about' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
       </div>
     );
   }

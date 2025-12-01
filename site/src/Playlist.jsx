@@ -63,12 +63,6 @@ export default function Playlist() {
       youtubeUrl: ""
     },
     {
-      title: "Christmas This Year",
-      artist: "TobyMac ft. Leigh Nash",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
       title: "Call of Duty Medley",
       artist: "Various Artists",
       spotifyUrl: "",
@@ -131,18 +125,6 @@ export default function Playlist() {
             </div>
           </div>
         ))}
-      </div>
-      
-      <div className="playlist-info">
-        <div className="info-card">
-          <h3>🕐 Show Schedule</h3>
-          <p>Songs play in order throughout the evening, creating a seamless musical journey.</p>
-        </div>
-        
-        <div className="info-card">
-          <h3>🎶 Love a Song?</h3>
-          <p>Click the icons to listen on your favorite platform. <a href="#/contact">Contact us</a> for song requests!</p>
-        </div>
       </div>
     </section>
   );
