@@ -39,9 +39,9 @@ function Home({ mapSrc }) {
       
       // Show runs 5PM - 10PM MT
       if (hour < 17) {
-        return { active: false, message: 'Show starts at 5:00 PM MT' };
+        return { active: false, message: 'Show starts at 5:00 PM' };
       } else if (hour >= 22) {
-        return { active: false, message: 'Show ended at 10:00 PM MT' };
+        return { active: false, message: 'Show ended at 10:00 PM' };
       }
       
       return { active: true, message: null };
@@ -176,7 +176,7 @@ function Home({ mapSrc }) {
   return (
     <section style={{marginTop: '1rem'}}>
       <p>
-        Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from dusk until 10pm.
+        Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from 5:00pm - 10:00pm.
       </p>
 
       <h2>Schedule</h2>
