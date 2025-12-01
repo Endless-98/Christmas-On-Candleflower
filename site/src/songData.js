@@ -216,14 +216,24 @@ export function getSongMetadata(songTitle) {
 export function getNextSong(currentSongTitle) {
   const currentIndex = playlistOrder.indexOf(currentSongTitle);
   
-  // If song not found or at the end, return null
-  if (currentIndex === -1 || currentIndex === playlistOrder.length - 1) {
+  // If song not found, return null
+  if (currentIndex === -1) {
     return null;
   }
   
-  // Get the next song title and its metadata
-  const nextSongTitle = playlistOrder[currentIndex + 1];
-  return getSongMetadata(nextSongTitle);
+  // Find the next song that isn't "Lanny and Wayne"
+  for (let i = currentIndex + 1; i < playlistOrder.length; i++) {
+    const nextSongTitle = playlistOrder[i];
+    const metadata = getSongMetadata(nextSongTitle);
+    
+    // Skip "Lanny and Wayne" entries (transitions, intro, outro, etc.)
+    if (metadata.artist !== "") {
+      return metadata;
+    }
+  }
+  
+  // No more songs found
+  return null;
 }
 
 /**
