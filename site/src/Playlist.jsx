@@ -18,6 +18,7 @@ export default function Playlist({ nowPlaying }) {
       return {
         title: song.displayName,
         artist: song.artist,
+        albumArt: song.albumArt,
         spotifyUrl: "",
         youtubeUrl: ""
       };
@@ -32,6 +33,9 @@ export default function Playlist({ nowPlaying }) {
           const isCurrentlyPlaying = nowPlaying?.songTitle === song.title;
           return (
           <div key={index} className={`song-simple ${isCurrentlyPlaying ? 'now-playing-highlight' : ''}`}>
+            {song.albumArt && (
+              <img src={song.albumArt} alt={`${song.title} album art`} className="song-album-art" />
+            )}
             <div className="song-number">{index + 1}</div>
             <div className="song-details">
               <div className="song-title-simple">{song.title}</div>

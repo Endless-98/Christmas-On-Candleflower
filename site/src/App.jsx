@@ -148,6 +148,7 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         setNowPlaying({
           songTitle: metadata.displayName || 'No track playing',
           artist: metadata.artist || '',
+          albumArt: metadata.albumArt || '',
           timestamp: lastModified.toISOString(),
           songDuration,
           showStatus: 'active',
@@ -220,7 +221,11 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
       <h2 id="playlist">Now Playing</h2>
       <div className="now-playing">
         <div className="np-art" aria-hidden>
-          🎵
+          {nowPlaying.albumArt ? (
+            <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
+          ) : (
+            '🎵'
+          )}
         </div>
         <div className="np-info">
           <div className="np-track">{nowPlaying.songTitle}</div>
@@ -273,6 +278,7 @@ export default function App() {
   const [nowPlaying, setNowPlaying] = useState({
     songTitle: 'No track playing',
     artist: 'Not connected',
+    albumArt: '',
     timestamp: null,
     showStatus: null,
     upNext: null
