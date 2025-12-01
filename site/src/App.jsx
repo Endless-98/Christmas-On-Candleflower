@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Contact from './Contact';
 import Playlist from './Playlist';
-import { getSongMetadata } from './songData';
+import { getNextSong } from './songData';
 
 function Home({ mapSrc, nowPlaying, setNowPlaying }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +59,8 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
           songTitle: showCheck.message,
           artist: '',
           timestamp: null,
-          showStatus: 'inactive'
+          showStatus: 'inactive',
+          upNext: null
         });
         setIsLoading(false);
         
@@ -120,36 +121,34 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         const songDuration = data.songDuration || 180; // Default 3 minutes if not provided
         const secondsRemaining = songDuration - secondsSinceStart;
         
-        // Look up metadata from local song database
-        const metadata = getSongMetadata(data.songTitle);
-        
-        console.log(`🎵 Song: "${metadata.displayName}" by ${metadata.artist || '(no artist)'}`);
+        console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
         console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
         
+        // Get the next song in the playlist
+        const upNext = getNextSong(data.songTitle);
+        
         setNowPlaying({
-          songTitle: metadata.displayName || 'No track playing',
-          artist: metadata.artist || '',
-          albumArt: metadata.albumArt,
+          songTitle: data.songTitle || 'No track playing',
+          artist: data.artist || 'Unknown artist',
           timestamp: lastModified.toISOString(),
           songDuration,
-          showStatus: 'active'
+          showStatus: 'active',
+          upNext
         });
         setIsLoading(false);
         
-        // Schedule next check: when song ends + 2.0 second grace period
-        let nextCheckIn = Math.max(secondsRemaining + 2.0, 1); // At least 1 second
-        let shouldRetry = false;
-
-        // If song should have already ended, treat as retry to trigger exponential backoff
+        // Schedule next check: when song ends + 3.5 second grace period
+        let nextCheckIn = Math.max(secondsRemaining + 3.5, 1); // At least 1 second
+        
+        // If song should have already ended, check sooner
         if (secondsRemaining <= 0) {
           nextCheckIn = 1;
-          shouldRetry = true; // Trigger retry logic since data is stale
-          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s (will retry)...`);
+          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s...`);
         } else {
-          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 2.0s grace)`);
+          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 3.5s grace)`);
         }
         
-        timeoutId = setTimeout(() => fetchNowPlaying(shouldRetry), nextCheckIn * 1000);
+        timeoutId = setTimeout(() => fetchNowPlaying(false), nextCheckIn * 1000);
         
       } catch (error) {
         console.error('❌ Failed to fetch now playing:', error);
@@ -188,11 +187,7 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
       <h2 id="playlist">Now Playing</h2>
       <div className="now-playing">
         <div className="np-art" aria-hidden>
-          {nowPlaying.albumArt ? (
-            <img src={nowPlaying.albumArt} alt="" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-          ) : (
-            '🎵'
-          )}
+          🎵
         </div>
         <div className="np-info">
           <div className="np-track">{nowPlaying.songTitle}</div>
@@ -200,6 +195,11 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
           {!isLoading && nowPlaying.timestamp && (
             <div className="np-time muted" style={{fontSize: '0.85rem', marginTop: '0.25rem'}}>
               Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString('en-US', { timeZone: 'America/Denver' })}
+            </div>
+          )}
+          {nowPlaying.upNext && (
+            <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+              Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
             </div>
           )}
         </div>
@@ -240,9 +240,9 @@ export default function App() {
   const [nowPlaying, setNowPlaying] = useState({
     songTitle: 'No track playing',
     artist: 'Not connected',
-    albumArt: null,
     timestamp: null,
-    showStatus: null
+    showStatus: null,
+    upNext: null
   });
   
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';

@@ -19,7 +19,7 @@ export const songDatabase = {
   },
   "All I Need For Christmas": {
     displayName: "All I Need For Christmas",
-    artist: "Various Artists",
+    artist: "Toby Mac",
     albumArt: "/assets/album-art/all-i-need.jpg"
   },
   "05 - Transition 2": {
@@ -29,7 +29,7 @@ export const songDatabase = {
   },
   "Carol of the Bells": {
     displayName: "Carol of the Bells",
-    artist: "Various Artists",
+    artist: "Lindsey Stirling",
     albumArt: "/assets/album-art/carol-bells.jpg"
   },
   "07 - Transition 3": {
@@ -39,7 +39,7 @@ export const songDatabase = {
   },
   "Feels Like Joy": {
     displayName: "Feels Like Joy",
-    artist: "Various Artists",
+    artist: "Micah Tyler",
     albumArt: "/assets/album-art/feels-like-joy.jpg"
   },
   "09 - Transition 4": {
@@ -59,7 +59,7 @@ export const songDatabase = {
   },
   "God Rest Ye Merry Gentlemen": {
     displayName: "God Rest Ye Merry Gentlemen",
-    artist: "Traditional",
+    artist: "Pentatonix",
     albumArt: "/assets/album-art/god-rest.jpg"
   },
   "13 - Transition 6": {
@@ -69,7 +69,7 @@ export const songDatabase = {
   },
   "Christmas Party (All the Way)": {
     displayName: "Christmas Party (All the Way)",
-    artist: "Various Artists",
+    artist: "Gracechase",
     albumArt: "/assets/album-art/christmas-party.jpg"
   },
   "15 - Transition 7": {
@@ -79,7 +79,7 @@ export const songDatabase = {
   },
   "Sounding Joy": {
     displayName: "Sounding Joy",
-    artist: "Various Artists",
+    artist: "Ellie Holcomb",
     albumArt: "/assets/album-art/sounding-joy.jpg"
   },
   "17 - Transition 8": {
@@ -89,7 +89,7 @@ export const songDatabase = {
   },
   "Light of Christmas": {
     displayName: "Light of Christmas",
-    artist: "Various Artists",
+    artist: "TobyMac",
     albumArt: "/assets/album-art/light-of-christmas.jpg"
   },
   "19 - Transition 9": {
@@ -99,7 +99,7 @@ export const songDatabase = {
   },
   "Ring the Bells": {
     displayName: "Ring the Bells",
-    artist: "Various Artists",
+    artist: "Big Daddy Weave ft. Meridith Andrews",
     albumArt: "/assets/album-art/ring-bells.jpg"
   },
   "23 - Transition 11": {
@@ -108,7 +108,7 @@ export const songDatabase = {
     albumArt: "/assets/album-art/transition.jpg"
   },
   "Call of Duty": {
-    displayName: "Call of Duty",
+    displayName: "Call of Duty Medley",
     artist: "Game Soundtrack",
     albumArt: "/assets/album-art/call-of-duty.jpg"
   },
@@ -118,8 +118,8 @@ export const songDatabase = {
     albumArt: "/assets/album-art/transition.jpg"
   },
   "Joy He Shall Reign": {
-    displayName: "Joy He Shall Reign",
-    artist: "Various Artists",
+    displayName: "Joy! He Shall Reign",
+    artist: "Big Daddy Weave",
     albumArt: "/assets/album-art/joy-reign.jpg"
   },
   "27 - Transition 13": {
@@ -129,7 +129,7 @@ export const songDatabase = {
   },
   "Christmas Every Day": {
     displayName: "Christmas Every Day",
-    artist: "Various Artists",
+    artist: "Simple Plan",
     albumArt: "/assets/album-art/christmas-every-day.jpg"
   },
   "29 - Transition 14": {
@@ -139,7 +139,7 @@ export const songDatabase = {
   },
   "To Hear the Angels Sing": {
     displayName: "To Hear the Angels Sing",
-    artist: "Various Artists",
+    artist: "Gracechase",
     albumArt: "/assets/album-art/angels-sing.jpg"
   },
   "31 - Outro": {
@@ -153,6 +153,40 @@ export const songDatabase = {
     albumArt: "/assets/album-art/system.jpg"
   }
 };
+
+// Ordered playlist sequence (as they appear in the show)
+export const playlistOrder = [
+  "Countdown",
+  "01 - Intro",
+  "Gracechase - EventBetterChristmas",
+  "03 - Transition 1",
+  "All I Need For Christmas",
+  "05 - Transition 2",
+  "Carol of the Bells",
+  "07 - Transition 3",
+  "Feels Like Joy",
+  "09 - Transition 4",
+  "Star Wars Medley",
+  "11 - Transition 5",
+  "God Rest Ye Merry Gentlemen",
+  "13 - Transition 6",
+  "Christmas Party (All the Way)",
+  "15 - Transition 7",
+  "Sounding Joy",
+  "17 - Transition 8",
+  "Light of Christmas",
+  "19 - Transition 9",
+  "Ring the Bells",
+  "23 - Transition 11",
+  "Call of Duty",
+  "25 - Transition 12",
+  "Joy He Shall Reign",
+  "27 - Transition 13",
+  "Christmas Every Day",
+  "29 - Transition 14",
+  "To Hear the Angels Sing",
+  "31 - Outro"
+];
 
 /**
  * Get metadata for a song by title
@@ -172,6 +206,24 @@ export function getSongMetadata(songTitle) {
     artist: "Unknown Artist",
     albumArt: "/assets/album-art/default.jpg"
   };
+}
+
+/**
+ * Get the next song in the playlist
+ * @param {string} currentSongTitle - The title of the current song
+ * @returns {Object|null} Metadata for the next song, or null if at end or not found
+ */
+export function getNextSong(currentSongTitle) {
+  const currentIndex = playlistOrder.indexOf(currentSongTitle);
+  
+  // If song not found or at the end, return null
+  if (currentIndex === -1 || currentIndex === playlistOrder.length - 1) {
+    return null;
+  }
+  
+  // Get the next song title and its metadata
+  const nextSongTitle = playlistOrder[currentIndex + 1];
+  return getSongMetadata(nextSongTitle);
 }
 
 /**

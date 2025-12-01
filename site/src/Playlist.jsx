@@ -1,92 +1,28 @@
 import React from 'react';
+import { songDatabase, playlistOrder } from './songData';
 
 export default function Playlist({ nowPlaying }) {
-  const songs = [
-    {
-      title: "Even Better Christmas",
-      artist: "Gracechase",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "All I Need For Christmas",
-      artist: "Toby Mac",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Carol of the Bells",
-      artist: "Lindsey Stirling",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Feels Like Joy",
-      artist: "Micah Tyler",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Star Wars Medley",
-      artist: "Various Artists",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "God Rest Ye Merry Gentlemen",
-      artist: "Pentatonix",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Christmas Party (All the Way)",
-      artist: "Gracechase",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Sounding Joy",
-      artist: "Ellie Holcomb",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Light Of Christmas",
-      artist: "TobyMac",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Ring the Bells",
-      artist: "Big Daddy Weave ft. Meridith Andrews",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Call of Duty Medley",
-      artist: "Various Artists",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Joy! He Shall Reign",
-      artist: "Big Daddy Weave",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "Christmas Every Day",
-      artist: "Simple Plan",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    },
-    {
-      title: "To Hear the Angels Sing",
-      artist: "Gracechase",
-      spotifyUrl: "",
-      youtubeUrl: ""
-    }
-  ];
+  // Build songs array from the songDatabase, excluding system/transition tracks
+  if (!playlistOrder || !songDatabase) {
+    console.error('songData not loaded properly');
+    return <section style={{marginTop: '1rem'}}><h2>Our Christmas Playlist</h2><p>Loading...</p></section>;
+  }
+
+  const songs = playlistOrder
+    .map(songKey => {
+      const song = songDatabase[songKey];
+      if (!song) {
+        console.warn(`Song not found in database: ${songKey}`);
+        return null;
+      }
+      return {
+        title: song.displayName,
+        artist: song.artist,
+        spotifyUrl: "",
+        youtubeUrl: ""
+      };
+    })
+    .filter(song => song && song.artist !== ""); // Exclude null entries and Lanny and Wayne entries
 
   return (
     <section style={{marginTop: '1rem'}}>
