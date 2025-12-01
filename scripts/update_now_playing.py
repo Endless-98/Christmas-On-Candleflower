@@ -9,11 +9,11 @@ Requirements:
     pip install boto3
 
 Usage:
-    python update_now_playing.py "Song Title" "Artist Name" --duration 180
+    python update_now_playing.py "Song Title" --duration 180000
     
     Or import and use programmatically:
     from update_now_playing import update_now_playing
-    update_now_playing("Carol of the Bells", "Lindsey Stirling", 180)
+    update_now_playing("Carol of the Bells", 180000)
 """
 
 import sys
@@ -53,7 +53,6 @@ AWS_SECRET_ACCESS_KEY = None  # Set via 'aws configure' instead
 
 def update_now_playing(
     song_title: str,
-    artist: str,
     song_duration: int,
     bucket: str = S3_BUCKET,
     key: str = S3_KEY,
@@ -65,8 +64,7 @@ def update_now_playing(
     
     Args:
         song_title: The title of the currently playing song
-        artist: The artist name
-        song_duration: Song length in seconds
+        song_duration: Song length in milliseconds
         bucket: S3 bucket name
         key: S3 object key (filename)
         region: AWS region
@@ -87,10 +85,12 @@ def update_now_playing(
         )
     
     # Prepare the payload
+    # Convert milliseconds to seconds for the frontend
+    song_duration_seconds = song_duration // 1000
+    
     payload = {
         "songTitle": song_title,
-        "artist": artist,
-        "songDuration": song_duration,
+        "songDuration": song_duration_seconds,
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
 
@@ -127,7 +127,7 @@ def update_now_playing(
             CacheControl='no-cache, no-store, must-revalidate'
         )
         
-        print(f"✓ Successfully updated S3: {song_title} - {artist} ({song_duration}s)")
+        print(f"✓ Successfully updated S3: {song_title} ({song_duration}ms = {song_duration_seconds}s)")
         print(f"  Bucket: s3://{bucket}/{key}")
         return response
         
@@ -154,14 +154,10 @@ def main():
         help="The title of the song"
     )
     parser.add_argument(
-        "artist",
-        help="The artist name"
-    )
-    parser.add_argument(
         "-d", "--duration",
         type=int,
         required=True,
-        help="Song duration in seconds"
+        help="Song duration in milliseconds"
     )
     parser.add_argument(
         "--bucket",
@@ -189,16 +185,17 @@ def main():
     try:
         update_now_playing(
             song_title=args.song_title,
-            artist=args.artist,
             song_duration=args.duration,
             bucket=args.bucket,
             key=args.key,
             region=args.region,
             dry_run=args.dry_run
         )
+        input("\nPress Enter to close...")
         sys.exit(0)
     except Exception as e:
         print(f"Failed to update now playing: {e}", file=sys.stderr)
+        input("\nPress Enter to close...")
         sys.exit(1)
 
 
