@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Contact from './Contact';
 import Playlist from './Playlist';
-import { getNextSong } from './songData';
+import { getNextSong, getSongMetadata } from './songData';
 
 function Home({ mapSrc, nowPlaying, setNowPlaying }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -124,12 +124,15 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
         console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
         
+        // Look up metadata from local song database
+        const metadata = getSongMetadata(data.songTitle);
+        
         // Get the next song in the playlist
         const upNext = getNextSong(data.songTitle);
         
         setNowPlaying({
-          songTitle: data.songTitle || 'No track playing',
-          artist: data.artist || 'Unknown artist',
+          songTitle: metadata.displayName || 'No track playing',
+          artist: metadata.artist || '',
           timestamp: lastModified.toISOString(),
           songDuration,
           showStatus: 'active',
