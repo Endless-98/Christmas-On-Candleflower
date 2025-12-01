@@ -137,15 +137,15 @@ function Home({ mapSrc }) {
         });
         setIsLoading(false);
         
-        // Schedule next check: when song ends + 3.5 second grace period
-        let nextCheckIn = Math.max(secondsRemaining + 3.5, 1); // At least 1 second
-        
+        // Schedule next check: when song ends + 2.0 second grace period
+        let nextCheckIn = Math.max(secondsRemaining + 2.0, 1); // At least 1 second
+
         // If song should have already ended, check sooner
         if (secondsRemaining <= 0) {
           nextCheckIn = 1;
           console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s...`);
         } else {
-          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 3.5s grace)`);
+          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 2.0s grace)`);
         }
         
         timeoutId = setTimeout(() => fetchNowPlaying(false), nextCheckIn * 1000);
