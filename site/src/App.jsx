@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Contact from './Contact';
 import Playlist from './Playlist';
+import { getNextSong } from './songData';
 
-function Home({ mapSrc }) {
-  const [nowPlaying, setNowPlaying] = useState({
-    songTitle: 'No track playing',
-    artist: 'Not connected',
-    timestamp: null,
-    showStatus: null
-  });
+function Home({ mapSrc, nowPlaying, setNowPlaying }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -64,7 +59,8 @@ function Home({ mapSrc }) {
           songTitle: showCheck.message,
           artist: '',
           timestamp: null,
-          showStatus: 'inactive'
+          showStatus: 'inactive',
+          upNext: null
         });
         setIsLoading(false);
         
@@ -128,12 +124,16 @@ function Home({ mapSrc }) {
         console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
         console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
         
+        // Get the next song in the playlist
+        const upNext = getNextSong(data.songTitle);
+        
         setNowPlaying({
           songTitle: data.songTitle || 'No track playing',
           artist: data.artist || 'Unknown artist',
           timestamp: lastModified.toISOString(),
           songDuration,
-          showStatus: 'active'
+          showStatus: 'active',
+          upNext
         });
         setIsLoading(false);
         
@@ -197,6 +197,11 @@ function Home({ mapSrc }) {
               Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString('en-US', { timeZone: 'America/Denver' })}
             </div>
           )}
+          {nowPlaying.upNext && (
+            <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+              Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+            </div>
+          )}
         </div>
       </div>
 
@@ -230,6 +235,16 @@ export default function App() {
     const hash = window.location.hash || '#/';
     return hash.replace(/^#/, '') || '/';
   });
+  
+  // Shared state for now playing across all components
+  const [nowPlaying, setNowPlaying] = useState({
+    songTitle: 'No track playing',
+    artist: 'Not connected',
+    timestamp: null,
+    showStatus: null,
+    upNext: null
+  });
+  
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
@@ -318,11 +333,11 @@ export default function App() {
           </nav>
         </header>
 
-        {route === '/playlist' && <Playlist />}
+        {route === '/playlist' && <Playlist nowPlaying={nowPlaying} />}
         {route === '/contact' && <Contact />}
-        {route === '/' && <Home mapSrc={mapSrc} />}
+        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
       </div>
     );
   }
