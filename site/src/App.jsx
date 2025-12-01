@@ -139,16 +139,18 @@ function Home({ mapSrc }) {
         
         // Schedule next check: when song ends + 2.0 second grace period
         let nextCheckIn = Math.max(secondsRemaining + 2.0, 1); // At least 1 second
+        let shouldRetry = false;
 
-        // If song should have already ended, check sooner
+        // If song should have already ended, treat as retry to trigger exponential backoff
         if (secondsRemaining <= 0) {
           nextCheckIn = 1;
-          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s...`);
+          shouldRetry = true; // Trigger retry logic since data is stale
+          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s (will retry)...`);
         } else {
           console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 2.0s grace)`);
         }
         
-        timeoutId = setTimeout(() => fetchNowPlaying(false), nextCheckIn * 1000);
+        timeoutId = setTimeout(() => fetchNowPlaying(shouldRetry), nextCheckIn * 1000);
         
       } catch (error) {
         console.error('❌ Failed to fetch now playing:', error);
