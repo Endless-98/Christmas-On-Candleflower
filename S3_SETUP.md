@@ -215,7 +215,7 @@ def on_song_start(song_title, artist, duration_seconds):
    - `songDuration` field (how long song is)
 3. **Schedule** next check for when song ends + 1 second
 4. **If data unchanged** → Exponential backoff retries
-5. **Show hours (5-10PM MT)** → Only fetch during active hours
+5. **Show hours (5-10PM)** → Only fetch during active hours
 
 **Console logging shows everything:**
 ```

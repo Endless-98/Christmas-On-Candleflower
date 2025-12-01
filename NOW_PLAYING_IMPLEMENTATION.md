@@ -88,8 +88,8 @@ const waitTime = Math.pow(2, retryCount) * 1000;
 ### 3. Show Hours Check
 ```javascript
 // Only active 5-10PM Mountain Time, December only
-if (hour < 17) return "Show starts at 5:00 PM MT";
-if (hour >= 22) return "Show ended at 10:00 PM MT";
+if (hour < 17) return "Show starts at 5:00 PM";
+if (hour >= 22) return "Show ended at 10:00 PM";
 ```
 
 ### 4. Detailed Console Logging

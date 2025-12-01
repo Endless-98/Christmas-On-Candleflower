@@ -37,7 +37,7 @@ function Home({ mapSrc }) {
         return { active: false, message: 'Show runs in December only' };
       }
       
-      // Show runs 5PM - 10PM MT
+      // Show runs 5PM - 10PM
       if (hour < 17) {
         return { active: false, message: 'Show starts at 5:00 PM' };
       } else if (hour >= 22) {
