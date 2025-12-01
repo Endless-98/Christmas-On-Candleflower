@@ -21,15 +21,21 @@ import json
 import argparse
 from datetime import datetime
 from typing import Optional
-import boto3
-from botocore.exceptions import ClientError, NoCredentialsError
+try:
+    import boto3
+    from botocore.exceptions import ClientError, NoCredentialsError
+except Exception:
+    # Allow running in environments without boto3 for --dry-run/testing
+    boto3 = None
+    ClientError = Exception
+    NoCredentialsError = Exception
 
 # ============================================================================
 # CONFIGURATION - Update these values after setting up S3 bucket
 # ============================================================================
 
 # Your S3 bucket name
-S3_BUCKET = "your-bucket-name"
+S3_BUCKET = "christmas-on-candleflower-now-playing-december-2025"
 
 # The key (filename) in the bucket
 S3_KEY = "current.json"
@@ -51,7 +57,8 @@ def update_now_playing(
     song_duration: int,
     bucket: str = S3_BUCKET,
     key: str = S3_KEY,
-    region: str = AWS_REGION
+    region: str = AWS_REGION,
+    dry_run: bool = False
 ) -> dict:
     """
     Upload now playing information to S3 bucket.
@@ -86,6 +93,12 @@ def update_now_playing(
         "songDuration": song_duration,
         "timestamp": datetime.utcnow().isoformat() + "Z"
     }
+
+    # Dry-run mode: print the payload and exit without contacting AWS
+    if dry_run:
+        print("DRY-RUN: payload to upload to S3:")
+        print(json.dumps(payload, indent=2))
+        return payload
     
     # Create S3 client
     try:
@@ -165,6 +178,11 @@ def main():
         help="Override the default AWS region",
         default=AWS_REGION
     )
+    parser.add_argument(
+        "--dry-run",
+        help="Print payload and skip uploading to S3",
+        action="store_true"
+    )
     
     args = parser.parse_args()
     
@@ -175,7 +193,8 @@ def main():
             song_duration=args.duration,
             bucket=args.bucket,
             key=args.key,
-            region=args.region
+            region=args.region,
+            dry_run=args.dry_run
         )
         sys.exit(0)
     except Exception as e:

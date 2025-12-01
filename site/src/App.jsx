@@ -15,6 +15,15 @@ function Home({ mapSrc }) {
     let timeoutId = null;
     let retryCount = 0;
     let lastFetchedData = null;
+    let debugMode = false;
+
+    // Debug function accessible from console
+    window.enableNowPlayingDebug = () => {
+      debugMode = true;
+      console.log('Now Playing Debug Mode Enabled - Will query even outside show hours');
+      // Trigger an immediate fetch
+      fetchNowPlaying();
+    };
 
     const isShowTime = () => {
       // Get current time in Mountain Time
@@ -30,9 +39,9 @@ function Home({ mapSrc }) {
       
       // Show runs 5PM - 10PM MT
       if (hour < 17) {
-        return { active: false, message: 'Show starts at 5:00 PM MT' };
+        return { active: false, message: 'Show starts at 5:00 PM' };
       } else if (hour >= 22) {
-        return { active: false, message: 'Show ended at 10:00 PM MT' };
+        return { active: false, message: 'Show ended at 10:00 PM' };
       }
       
       return { active: true, message: null };
@@ -49,7 +58,7 @@ function Home({ mapSrc }) {
 
       // Check if show is active
       const showCheck = isShowTime();
-      if (!showCheck.active) {
+      if (!debugMode && !showCheck.active) {
         console.log(`Show inactive: ${showCheck.message}`);
         setNowPlaying({
           songTitle: showCheck.message,
@@ -62,6 +71,10 @@ function Home({ mapSrc }) {
         // Check again in 5 minutes
         timeoutId = setTimeout(() => fetchNowPlaying(), 5 * 60 * 1000);
         return;
+      }
+
+      if (debugMode) {
+        console.log('🎛️ Debug Mode: Bypassing show time check');
       }
 
       try {
@@ -163,12 +176,12 @@ function Home({ mapSrc }) {
   return (
     <section style={{marginTop: '1rem'}}>
       <p>
-        Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from dusk until 10pm.
+        Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from 5:00pm - 10:00pm.
       </p>
 
       <h2>Schedule</h2>
       <ul className="items">
-        <li>Daily: Dusk — 10:00 PM</li>
+        <li>Daily: 5:00 PM — 10:00 PM</li>
       </ul>
 
       <h2 id="playlist">Now Playing</h2>
@@ -181,7 +194,7 @@ function Home({ mapSrc }) {
           <div className="np-artist muted">{nowPlaying.artist}</div>
           {!isLoading && nowPlaying.timestamp && (
             <div className="np-time muted" style={{fontSize: '0.85rem', marginTop: '0.25rem'}}>
-              Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString()}
+              Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString('en-US', { timeZone: 'America/Denver' })}
             </div>
           )}
         </div>
