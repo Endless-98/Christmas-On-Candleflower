@@ -173,6 +173,18 @@ a:hover { color: var(--hover-link); }
   transform: translateY(-1px);
 }
 
+/* Highlight for currently playing song */
+.song-simple.now-playing-highlight {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.song-simple.now-playing-highlight:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
 .song-number {
   min-width: 32px;
   height: 32px;

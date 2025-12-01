@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Playlist() {
+export default function Playlist({ nowPlaying }) {
   const songs = [
     {
       title: "Even Better Christmas",
@@ -92,8 +92,10 @@ export default function Playlist() {
     <section style={{marginTop: '1rem'}}>
       <h2>Our Christmas Playlist</h2>
       <div className="playlist-simple">
-        {songs.map((song, index) => (
-          <div key={index} className="song-simple">
+        {songs.map((song, index) => {
+          const isCurrentlyPlaying = nowPlaying?.songTitle === song.title;
+          return (
+          <div key={index} className={`song-simple ${isCurrentlyPlaying ? 'now-playing-highlight' : ''}`}>
             <div className="song-number">{index + 1}</div>
             <div className="song-details">
               <div className="song-title-simple">{song.title}</div>
@@ -124,7 +126,8 @@ export default function Playlist() {
               )}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

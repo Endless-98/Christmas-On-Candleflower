@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Contact from './Contact';
 import Playlist from './Playlist';
+import { getSongMetadata } from './songData';
 
-function Home({ mapSrc }) {
-  const [nowPlaying, setNowPlaying] = useState({
-    songTitle: 'No track playing',
-    artist: 'Not connected',
-    timestamp: null,
-    showStatus: null
-  });
+function Home({ mapSrc, nowPlaying, setNowPlaying }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -125,12 +120,16 @@ function Home({ mapSrc }) {
         const songDuration = data.songDuration || 180; // Default 3 minutes if not provided
         const secondsRemaining = songDuration - secondsSinceStart;
         
-        console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
+        // Look up metadata from local song database
+        const metadata = getSongMetadata(data.songTitle);
+        
+        console.log(`🎵 Song: "${metadata.displayName}" by ${metadata.artist || '(no artist)'}`);
         console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
         
         setNowPlaying({
-          songTitle: data.songTitle || 'No track playing',
-          artist: data.artist || 'Unknown artist',
+          songTitle: metadata.displayName || 'No track playing',
+          artist: metadata.artist || '',
+          albumArt: metadata.albumArt,
           timestamp: lastModified.toISOString(),
           songDuration,
           showStatus: 'active'
@@ -189,7 +188,11 @@ function Home({ mapSrc }) {
       <h2 id="playlist">Now Playing</h2>
       <div className="now-playing">
         <div className="np-art" aria-hidden>
-          🎵
+          {nowPlaying.albumArt ? (
+            <img src={nowPlaying.albumArt} alt="" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          ) : (
+            '🎵'
+          )}
         </div>
         <div className="np-info">
           <div className="np-track">{nowPlaying.songTitle}</div>
@@ -232,6 +235,16 @@ export default function App() {
     const hash = window.location.hash || '#/';
     return hash.replace(/^#/, '') || '/';
   });
+  
+  // Shared state for now playing across all components
+  const [nowPlaying, setNowPlaying] = useState({
+    songTitle: 'No track playing',
+    artist: 'Not connected',
+    albumArt: null,
+    timestamp: null,
+    showStatus: null
+  });
+  
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
@@ -320,11 +333,11 @@ export default function App() {
           </nav>
         </header>
 
-        {route === '/playlist' && <Playlist />}
+        {route === '/playlist' && <Playlist nowPlaying={nowPlaying} />}
         {route === '/contact' && <Contact />}
-        {route === '/' && <Home mapSrc={mapSrc} />}
+        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
       </div>
     );
   }
