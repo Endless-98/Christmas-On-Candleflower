@@ -89,7 +89,9 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         
         // Check if data is the same as last fetch (retry scenario)
         const dataString = JSON.stringify(data);
-        if (isRetry && lastFetchedData === dataString) {
+        const isSameData = lastFetchedData === dataString;
+        
+        if (isRetry && isSameData) {
           retryCount++;
           console.warn(`⚠️ RETRY ${retryCount}: Data unchanged since last fetch`);
           
@@ -107,19 +109,32 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
           return;
         }
         
-        // Data is new! Reset retry counter
-        if (retryCount > 0) {
-          console.log(`✅ Fresh data received after ${retryCount} retries`);
-        }
-        retryCount = 0;
-        lastFetchedData = dataString;
-        
         // Calculate how long ago the song started
         const now = Date.now();
         const songStartedAt = lastModified.getTime();
         const secondsSinceStart = Math.floor((now - songStartedAt) / 1000);
         const songDuration = data.songDuration || 180; // Default 3 minutes if not provided
         const secondsRemaining = songDuration - secondsSinceStart;
+        
+        // Check if this is stale data (song ended more than grace period ago)
+        const GRACE_PERIOD = 3.5;
+        const isStaleData = secondsRemaining < -GRACE_PERIOD;
+        
+        // CRITICAL: Only reset retry counter if we have truly fresh data
+        // If data is the same AND stale, we need to keep the retry counter
+        if (!isSameData) {
+          // Completely new data - reset everything
+          if (retryCount > 0) {
+            console.log(`✅ Fresh data received after ${retryCount} retries`);
+          }
+          retryCount = 0;
+          lastFetchedData = dataString;
+        } else if (!isStaleData) {
+          // Same data but still valid (within grace period) - reset retry counter
+          retryCount = 0;
+          lastFetchedData = dataString;
+        }
+        // If isSameData && isStaleData: keep retry counter, will use exponential backoff below
         
         console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
         console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
@@ -140,18 +155,33 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         });
         setIsLoading(false);
         
-        // Schedule next check: when song ends + 3.5 second grace period
-        let nextCheckIn = Math.max(secondsRemaining + 3.5, 1); // At least 1 second
-        
-        // If song should have already ended, check sooner
-        if (secondsRemaining <= 0) {
-          nextCheckIn = 1;
-          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s...`);
+        // Schedule next check with intelligent retry logic
+        let nextCheckIn;
+        let shouldRetry = false;
+
+        if (isStaleData) {
+          // Data is stale - use exponential backoff
+          retryCount++;
+          
+          let waitTime;
+          if (retryCount >= 10) {
+            waitTime = 15 * 60 * 1000; // 15 minutes
+            console.warn(`🔴 STALE DATA: Retry ${retryCount}. Waiting 15 minutes before next attempt.`);
+          } else {
+            waitTime = Math.min(Math.pow(2, retryCount) * 1000, 512000); // Cap at ~8.5 minutes
+            console.warn(`⚠️ STALE DATA: Song ended ${Math.abs(secondsRemaining)}s ago. Retry ${retryCount}: waiting ${waitTime / 1000}s`);
+          }
+          
+          nextCheckIn = waitTime / 1000;
+          shouldRetry = true;
         } else {
-          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 3.5s grace)`);
+          // Data is fresh - schedule based on when song will end
+          nextCheckIn = Math.max(secondsRemaining + GRACE_PERIOD, 1);
+          shouldRetry = false;
+          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + ${GRACE_PERIOD}s grace)`);
         }
         
-        timeoutId = setTimeout(() => fetchNowPlaying(false), nextCheckIn * 1000);
+        timeoutId = setTimeout(() => fetchNowPlaying(shouldRetry), nextCheckIn * 1000);
         
       } catch (error) {
         console.error('❌ Failed to fetch now playing:', error);
