@@ -118,8 +118,8 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   margin: 0.5rem auto 1rem;
 }
 .np-art {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@ a:hover { color: var(--hover-link); }
   border-radius: 12px;
   transition: all 0.2s ease;
   gap: 1rem;
-  min-height: 80px;
+  min-height: 96px;
 }
 
 .song-simple:hover {
@@ -187,8 +187,8 @@ a:hover { color: var(--hover-link); }
 }
 
 .song-album-art {
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   border-radius: 8px;
   object-fit: cover;
   border: 1px solid rgba(255,255,255,0.1);
@@ -307,12 +307,12 @@ a:hover { color: var(--hover-link); }
   .song-simple {
     gap: 0.75rem;
     padding: 0.75rem;
-    min-height: 72px;
+    min-height: 80px;
   }
   
   .song-album-art {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
   }
   
   .song-number {
