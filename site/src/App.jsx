@@ -1,9 +1,165 @@
 import React, { useEffect, useState } from 'react';
-import About from './About';
 import Contact from './Contact';
 import Playlist from './Playlist';
 
 function Home({ mapSrc }) {
+  const [nowPlaying, setNowPlaying] = useState({
+    songTitle: 'No track playing',
+    artist: 'Not connected',
+    timestamp: null,
+    showStatus: null
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let timeoutId = null;
+    let retryCount = 0;
+    let lastFetchedData = null;
+
+    const isShowTime = () => {
+      // Get current time in Mountain Time
+      const now = new Date();
+      const mtTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Denver' }));
+      const hour = mtTime.getHours();
+      const month = mtTime.getMonth(); // 0-indexed: December = 11
+      
+      // Only run in December
+      if (month !== 11) {
+        return { active: false, message: 'Show runs in December only' };
+      }
+      
+      // Show runs 5PM - 10PM MT
+      if (hour < 17) {
+        return { active: false, message: 'Show starts at 5:00 PM MT' };
+      } else if (hour >= 22) {
+        return { active: false, message: 'Show ended at 10:00 PM MT' };
+      }
+      
+      return { active: true, message: null };
+    };
+
+    const fetchNowPlaying = async (isRetry = false) => {
+      const s3Url = import.meta.env.VITE_NOW_PLAYING_S3_URL;
+      
+      if (!s3Url) {
+        console.error('VITE_NOW_PLAYING_S3_URL not configured');
+        setIsLoading(false);
+        return;
+      }
+
+      // Check if show is active
+      const showCheck = isShowTime();
+      if (!showCheck.active) {
+        console.log(`Show inactive: ${showCheck.message}`);
+        setNowPlaying({
+          songTitle: showCheck.message,
+          artist: '',
+          timestamp: null,
+          showStatus: 'inactive'
+        });
+        setIsLoading(false);
+        
+        // Check again in 5 minutes
+        timeoutId = setTimeout(() => fetchNowPlaying(), 5 * 60 * 1000);
+        return;
+      }
+
+      try {
+        console.log(`Fetching now playing from S3... (retry: ${isRetry}, count: ${retryCount})`);
+        const response = await fetch(s3Url, { cache: 'no-store' });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const lastModified = new Date(response.headers.get('Last-Modified'));
+        
+        console.log('Fetched data:', data);
+        console.log('Last modified:', lastModified.toISOString());
+        
+        // Check if data is the same as last fetch (retry scenario)
+        const dataString = JSON.stringify(data);
+        if (isRetry && lastFetchedData === dataString) {
+          retryCount++;
+          console.warn(`⚠️ RETRY ${retryCount}: Data unchanged since last fetch`);
+          
+          // Exponential backoff: 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, then 15min
+          let waitTime;
+          if (retryCount >= 10) {
+            waitTime = 15 * 60 * 1000; // 15 minutes
+            console.warn(`🔴 Max retries reached (${retryCount}). Waiting 15 minutes before next attempt.`);
+          } else {
+            waitTime = Math.min(Math.pow(2, retryCount) * 1000, 512000); // Cap at ~8.5 minutes
+            console.log(`⏱️ Exponential backoff: waiting ${waitTime / 1000}s before retry`);
+          }
+          
+          timeoutId = setTimeout(() => fetchNowPlaying(true), waitTime);
+          return;
+        }
+        
+        // Data is new! Reset retry counter
+        if (retryCount > 0) {
+          console.log(`✅ Fresh data received after ${retryCount} retries`);
+        }
+        retryCount = 0;
+        lastFetchedData = dataString;
+        
+        // Calculate how long ago the song started
+        const now = Date.now();
+        const songStartedAt = lastModified.getTime();
+        const secondsSinceStart = Math.floor((now - songStartedAt) / 1000);
+        const songDuration = data.songDuration || 180; // Default 3 minutes if not provided
+        const secondsRemaining = songDuration - secondsSinceStart;
+        
+        console.log(`🎵 Song: "${data.songTitle}" by ${data.artist}`);
+        console.log(`   Duration: ${songDuration}s, Elapsed: ${secondsSinceStart}s, Remaining: ${secondsRemaining}s`);
+        
+        setNowPlaying({
+          songTitle: data.songTitle || 'No track playing',
+          artist: data.artist || 'Unknown artist',
+          timestamp: lastModified.toISOString(),
+          songDuration,
+          showStatus: 'active'
+        });
+        setIsLoading(false);
+        
+        // Schedule next check: when song ends + 1 second grace period
+        let nextCheckIn = Math.max(secondsRemaining + 1, 1); // At least 1 second
+        
+        // If song should have already ended, check sooner
+        if (secondsRemaining <= 0) {
+          nextCheckIn = 1;
+          console.log(`⏩ Song should have ended ${Math.abs(secondsRemaining)}s ago. Checking in 1s...`);
+        } else {
+          console.log(`⏰ Next check in ${nextCheckIn}s (when song should end + 1s grace)`);
+        }
+        
+        timeoutId = setTimeout(() => fetchNowPlaying(true), nextCheckIn * 1000);
+        
+      } catch (error) {
+        console.error('❌ Failed to fetch now playing:', error);
+        setIsLoading(false);
+        
+        // Retry on error with exponential backoff
+        retryCount++;
+        const waitTime = Math.min(Math.pow(2, retryCount) * 1000, 60000); // Cap at 1 minute
+        console.log(`🔄 Error retry ${retryCount}: waiting ${waitTime / 1000}s`);
+        timeoutId = setTimeout(() => fetchNowPlaying(true), waitTime);
+      }
+    };
+
+    // Start fetching
+    fetchNowPlaying();
+
+    // Cleanup function
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
   return (
     <section style={{marginTop: '1rem'}}>
       <p>
@@ -21,11 +177,13 @@ function Home({ mapSrc }) {
           🎵
         </div>
         <div className="np-info">
-          <div className="np-track">No track playing</div>
-          <div className="np-artist muted">Not connected</div>
-        </div>
-        <div className="np-actions">
-          <a className="np-spotify muted" href="#" aria-disabled>Open in Spotify</a>
+          <div className="np-track">{nowPlaying.songTitle}</div>
+          <div className="np-artist muted">{nowPlaying.artist}</div>
+          {!isLoading && nowPlaying.timestamp && (
+            <div className="np-time muted" style={{fontSize: '0.85rem', marginTop: '0.25rem'}}>
+              Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString()}
+            </div>
+          )}
         </div>
       </div>
 
@@ -142,18 +300,16 @@ export default function App() {
           </div>
           <nav aria-label="Primary">
             <a href="#/" className={route === '/' ? 'nav-link active' : 'nav-link'}>Home</a>
-            <a href="#/about" className={route === '/about' ? 'nav-link active' : 'nav-link'}>About</a>
             <a href="#/playlist" className={route === '/playlist' ? 'nav-link active' : 'nav-link'}>Playlist</a>
             <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact Us</a>
           </nav>
         </header>
 
-        {route === '/about' && <About />}
         {route === '/playlist' && <Playlist />}
         {route === '/contact' && <Contact />}
         {route === '/' && <Home mapSrc={mapSrc} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/about' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} />}
       </div>
     );
   }
