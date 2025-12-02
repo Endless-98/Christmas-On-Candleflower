@@ -47,8 +47,8 @@ html::before {
   transform: translateY(var(--vv-offset, 0));
 }
 
-.container { max-width: 760px; margin: 0 auto; padding: 2rem; }
-.container { max-width: 760px; margin: 0 auto; padding: 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; 
   /* make the card container visually invisible while preserving spacing/layout */
   background: transparent;
