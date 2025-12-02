@@ -382,53 +382,35 @@ a:hover { color: var(--hover-link); }
 .song-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   align-items: center;
 }
 
 .action-btn {
   width: 42px;
   height: 42px;
-  border-radius: 50%;
+  border-radius: 20%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   font-size: 1.1rem;
   transition: all 0.2s ease;
-  border: 1px solid transparent;
+  border: none;
+  background: transparent;
   overflow: hidden;
-  padding: 4px;
+  padding: 0;
 }
 
 .action-btn img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 20%;
 }
 
 .action-btn:hover {
   transform: scale(1.1);
-}
-
-.spotify-btn {
-  background: rgba(30, 215, 96, 0.15);
-  border-color: rgba(30, 215, 96, 0.3);
-}
-
-.spotify-btn:hover {
-  background: rgba(30, 215, 96, 0.25);
-  border-color: rgba(30, 215, 96, 0.5);
-}
-
-.youtube-btn {
-  background: rgba(255, 0, 0, 0.15);
-  border-color: rgba(255, 0, 0, 0.3);
-}
-
-.youtube-btn:hover {
-  background: rgba(255, 0, 0, 0.25);
-  border-color: rgba(255, 0, 0, 0.5);
 }
 
 .playlist-info {

@@ -76,7 +76,27 @@ export default function Playlist({ nowPlaying }) {
 
   return (
     <section style={{marginTop: '1rem'}}>
-      <h2>Our Christmas Playlist</h2>
+      <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+        <h2 style={{margin: 0}}>Our Christmas Playlist</h2>
+        <a 
+          href="https://open.spotify.com/playlist/46VLQ2Ogiw46cMVjO4fM3p" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="action-btn"
+          title="Full Playlist on Spotify"
+        >
+          <img src="/link_icons/Spotify_Primary_Logo_RGB_Green.png" alt="Spotify" />
+        </a>
+        <a 
+          href="https://music.youtube.com/playlist?list=PL6cKiyV1lrnUzJDU2SYJPdksWZjp0bELL" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="action-btn"
+          title="Full Playlist on YouTube Music"
+        >
+          <img src="/link_icons/YT_music_logo.png" alt="YouTube Music" />
+        </a>
+      </div>
       <div className="playlist-simple">
         {songs.map((song, index) => {
           const isCurrentlyPlaying = nowPlaying?.songTitle === song.title;
@@ -106,7 +126,7 @@ export default function Playlist({ nowPlaying }) {
                     className="action-btn spotify-btn"
                     title="Listen on Spotify"
                   >
-                    <img src="/assets/link-icons/spotify_logo.png" alt="Spotify" />
+                    <img src="/link_icons/Spotify_Primary_Logo_RGB_Green.png" alt="Spotify" />
                   </a>
                 )}
                 {song.youtubeMusicUrl && (
@@ -117,7 +137,7 @@ export default function Playlist({ nowPlaying }) {
                     className="action-btn youtube-btn"
                     title="Listen on YouTube Music"
                   >
-                    <img src="/assets/link-icons/YT_music_logo.png" alt="YouTube Music" />
+                    <img src="/link_icons/YT_music_logo.png" alt="YouTube Music" />
                   </a>
                 )}
               </div>
