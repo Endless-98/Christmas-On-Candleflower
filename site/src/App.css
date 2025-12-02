@@ -256,6 +256,7 @@ a:hover { color: var(--hover-link); }
   gap: 0;
   min-height: 168px;
   overflow: hidden;
+  position: relative;
 }
 
 .song-simple > :first-child {
@@ -264,6 +265,13 @@ a:hover { color: var(--hover-link); }
   padding: 1rem;
   gap: 1rem;
   flex: 1;
+}
+
+.song-simple .progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .song-simple:hover {
