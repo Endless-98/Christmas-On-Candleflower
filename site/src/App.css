@@ -37,8 +37,8 @@ body {
   pointer-events: none;
 }
 
-.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
-.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 0.5rem 2rem 2rem 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 0.5rem 2rem 2rem 2rem; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; 
   /* make the card container visually invisible while preserving spacing/layout */
   background: transparent;
@@ -623,7 +623,7 @@ a:hover { color: var(--hover-link); }
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .modern-contact-form {
