@@ -10,7 +10,9 @@ export const songDatabase = {
   "Gracechase - EvenBetterChristmas": {
     displayName: "Even Better Christmas",
     artist: "Gracechase",
-    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
+    spotifyUrl: "https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=4uLU6hMCjMI75M1A2tKUQC"
   },
   "03 - Transition 1": {
     displayName: "Lanny and Wayne",
@@ -20,7 +22,9 @@ export const songDatabase = {
   "All I Need For Christmas": {
     displayName: "All I Need For Christmas",
     artist: "Toby Mac",
-    albumArt: "/assets/AlbumImages/All I Need For Christmas - Toby Mac & Terrain.png"
+    albumArt: "/assets/AlbumImages/All I Need For Christmas - Toby Mac & Terrain.png",
+    spotifyUrl: "https://open.spotify.com/track/2takcwOaAZWiXQijPHIx7B",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=2takcwOaAZWiXQijPHIx7B"
   },
   "05 - Transition 2": {
     displayName: "Lanny and Wayne",
@@ -30,7 +34,9 @@ export const songDatabase = {
   "Carol of the Bells": {
     displayName: "Carol of the Bells",
     artist: "Lindsey Stirling",
-    albumArt: "/assets/AlbumImages/Snow Waltz - Lindsey Stirling.png"
+    albumArt: "/assets/AlbumImages/Snow Waltz - Lindsey Stirling.png",
+    spotifyUrl: "https://open.spotify.com/track/4tHqQMWSqmL6YjXwsqthDI",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=4tHqQMWSqmL6YjXwsqthDI"
   },
   "07 - Transition 3": {
     displayName: "Lanny and Wayne",
@@ -40,7 +46,9 @@ export const songDatabase = {
   "Feels Like Joy": {
     displayName: "Feels Like Joy",
     artist: "Micah Tyler",
-    albumArt: "/assets/AlbumImages/Micah Tyler - Feels Like Joy.png"
+    albumArt: "/assets/AlbumImages/Micah Tyler - Feels Like Joy.png",
+    spotifyUrl: "https://open.spotify.com/track/0tgVpDi06FyKpA1z0VMD4v",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=0tgVpDi06FyKpA1z0VMD4v"
   },
   "09 - Transition 4": {
     displayName: "Lanny and Wayne",

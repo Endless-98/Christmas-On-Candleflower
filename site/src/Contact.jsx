@@ -50,8 +50,8 @@ export default function Contact() {
 
   return (
     <section style={{marginTop: '1rem'}}>
-      <h2>Get in Touch</h2>
-      <p style={{fontSize: '1.1rem', marginBottom: '1.5rem', lineHeight: '1.6'}}>
+      <h2>💌 Get in Touch</h2>
+      <p style={{fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.6'}}>
         Questions, song requests, or feedback? We'd love to hear from you!
       </p>
       
@@ -133,7 +133,7 @@ export default function Contact() {
                   Sending...
                 </>
               ) : (
-                <>Send Message</>
+                <>🎄 Send Message</>
               )}
             </button>
           </form>

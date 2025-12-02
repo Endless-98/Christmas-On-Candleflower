@@ -11,28 +11,9 @@ h2 { border: none; border-top: none; padding-top: 0; }
 html, body, #root { height: 100%; }
 /* Reserve space for the vertical scrollbar so width doesn't shift between pages */
 html { 
-  overflow-y: scroll;
+  scrollbar-gutter: stable both-edges;
   background-color: var(--bg);
 }
-
-/* Fixed background that covers everything including scrollbar area */
-html::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-image: var(--bg-img-url);
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: cover;
-  z-index: -1;
-  pointer-events: none;
-}
-
 body { 
   margin: 0; 
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; 
@@ -40,8 +21,34 @@ body {
   color: var(--fg);
 }
 
-.container { max-width: 760px; margin: 0 auto; padding: 0.5rem 2rem 2rem 2rem; }
-.container { max-width: 760px; margin: 0 auto; padding: 0.5rem 2rem 2rem 2rem; }
+/* Use a fixed, full-viewport pseudo-element on HTML for the background image
+   so it fills under the scrollbar gutter. This approach works more consistently 
+   across mobile browsers (where background-attachment: fixed is often ignored) 
+   while keeping the image visually fixed during scroll. */
+html::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  width: 100%;
+  /* Use a stable viewport height to avoid jumping when browser chrome shows/hides */
+  height: 100vh;   /* fallback */
+  height: 100dvh;  /* dynamic viewport (supported browsers) */
+  height: 100svh;  /* stable/smallest viewport to prevent resize jumps */
+  background-image: var(--bg-img-url);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  z-index: -1;
+  pointer-events: none;
+  /* Mobile viewport compensation */
+  transform: translateY(var(--vv-offset, 0));
+}
+
+.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
 header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; 
   /* make the card container visually invisible while preserving spacing/layout */
   background: transparent;
@@ -374,7 +381,8 @@ a:hover { color: var(--hover-link); }
 
 .song-actions {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.25rem;
   align-items: center;
 }
 
@@ -626,7 +634,7 @@ a:hover { color: var(--hover-link); }
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 12px;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .modern-contact-form {

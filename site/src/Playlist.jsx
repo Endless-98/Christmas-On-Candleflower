@@ -68,8 +68,8 @@ export default function Playlist({ nowPlaying }) {
         title: song.displayName,
         artist: song.artist,
         albumArt: song.albumArt,
-        spotifyUrl: "",
-        youtubeUrl: ""
+        spotifyUrl: song.spotifyUrl || "",
+        youtubeMusicUrl: song.youtubeMusicUrl || ""
       };
     })
     .filter(song => song && song.artist !== ""); // Exclude null entries and Lanny and Wayne entries
@@ -109,19 +109,18 @@ export default function Playlist({ nowPlaying }) {
                     🎵
                   </a>
                 )}
-                {song.youtubeUrl && (
+                {song.youtubeMusicUrl && (
                   <a 
-                    href={song.youtubeUrl} 
+                    href={song.youtubeMusicUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="action-btn youtube-btn"
-                    title="Watch on YouTube"
+                    title="Listen on YouTube Music"
                   >
                     📺
                   </a>
                 )}
               </div>
-              <div className="song-number">{index + 1}</div>
             </div>
             {isCurrentlyPlaying && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
           </div>
