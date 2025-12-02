@@ -214,8 +214,8 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
 
   return (
     <section style={{marginTop: '1rem'}}>
-      <p>
-        Join us nightly for a festive display of lights, music, and holiday cheer. Our display runs every evening during December from 5:00pm - 10:00pm.
+      <p> 
+        Welcome! We're excited to share the joy of Christ's birth through our Christmas light show. Join us nightly from 5:00 PM to 10:00 PM throughout December as we celebrate the season with music, lights, and the love of our Savior.
       </p>
 
       <h2>Schedule</h2>
