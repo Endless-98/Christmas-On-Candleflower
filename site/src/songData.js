@@ -7,7 +7,7 @@ export const songDatabase = {
     artist: "",
     albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   },
-  "Gracechase - EventBetterChristmas": {
+  "Gracechase - EvenBetterChristmas": {
     displayName: "Even Better Christmas",
     artist: "Gracechase",
     albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
