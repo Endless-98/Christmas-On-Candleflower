@@ -11,8 +11,8 @@ export const songDatabase = {
     displayName: "Even Better Christmas",
     artist: "Gracechase",
     albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
-    spotifyUrl: "https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC",
-    youtubeMusicUrl: "https://music.youtube.com/watch?v=4uLU6hMCjMI75M1A2tKUQC"
+    spotifyUrl: "https://open.spotify.com/track/placeholder1",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=placeholder1"
   },
   "03 - Transition 1": {
     displayName: "Lanny and Wayne",
