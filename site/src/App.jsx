@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Contact from './Contact';
 import Playlist from './Playlist';
-import { getNextSong, getSongMetadata } from './songData';
+import { getNextSong, getSongMetadata, songDatabase } from './songData';
 
 function Home({ mapSrc, nowPlaying, setNowPlaying }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -141,6 +141,11 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
         
         // Look up metadata from local song database
         const metadata = getSongMetadata(data.songTitle);
+        console.log(`📀 Metadata lookup for "${data.songTitle}":`, metadata);
+        if (metadata.artist === "Unknown Artist") {
+          console.warn(`⚠️ Song not found in database! Title from S3: "${data.songTitle}"`);
+          console.log('Available database keys:', Object.keys(songDatabase));
+        }
         
         // Get the next song in the playlist
         const upNext = getNextSong(data.songTitle);

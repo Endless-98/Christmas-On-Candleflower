@@ -209,7 +209,7 @@ export function getSongMetadata(songTitle) {
   return {
     displayName: songTitle,
     artist: "Unknown Artist",
-    albumArt: "/assets/album-art/default.jpg"
+    albumArt: "/assets/AlbumImages/Lanny and Wayne.png"
   };
 }
 
