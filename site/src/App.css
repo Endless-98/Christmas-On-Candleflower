@@ -81,7 +81,7 @@ header nav .nav-link.active:hover {
 .site-title img { height: calc(80px * 2); width: auto; display: block; transform-origin: left center; }
 
 @media (min-width: 900px) {
-  .site-title img { height: calc(96px * 2); }
+  .site-title img { height: calc(115px * 2); }
 }
 
 /* Slight visual segmentation between title and nav on wider screens */
