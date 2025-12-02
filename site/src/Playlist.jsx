@@ -1,5 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { songDatabase, playlistOrder } from './songData';
+
+function ProgressBar({ timestamp, songDuration, artist }) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Don't show progress for Lanny and Wayne (empty artist)
+    if (!artist || !timestamp || !songDuration) {
+      setProgress(0);
+      return;
+    }
+
+    const updateProgress = () => {
+      const now = Date.now();
+      const songStartedAt = new Date(timestamp).getTime();
+      const elapsed = now - songStartedAt;
+      const progressPercent = Math.min((elapsed / songDuration) * 100, 100);
+      setProgress(progressPercent);
+    };
+
+    updateProgress();
+    const interval = setInterval(updateProgress, 500);
+
+    return () => clearInterval(interval);
+  }, [timestamp, songDuration, artist]);
+
+  // Don't render for Lanny and Wayne
+  if (!artist) return null;
+
+  return (
+    <div className="progress-bar-container">
+      <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+    </div>
+  );
+}
 
 export default function Playlist({ nowPlaying }) {
   const nowPlayingRef = useRef(null);
@@ -50,41 +84,44 @@ export default function Playlist({ nowPlaying }) {
             className={`song-simple ${isCurrentlyPlaying ? 'now-playing-highlight' : ''}`}
             ref={isCurrentlyPlaying ? nowPlayingRef : null}
           >
-            {song.albumArt && (
-              <img src={song.albumArt} alt={`${song.title} album art`} className="song-album-art" />
-            )}
-            <div className="song-number">{index + 1}</div>
-            <div className="song-details">
-              {isCurrentlyPlaying && (
-                <div className="currently-playing-badge">Now Playing</div>
+            <div>
+              {song.albumArt && (
+                <img src={song.albumArt} alt={`${song.title} album art`} className="song-album-art" />
               )}
-              <div className="song-title-simple">{song.title}</div>
-              <div className="song-artist-simple">{song.artist}</div>
+              <div className="song-number">{index + 1}</div>
+              <div className="song-details">
+                {isCurrentlyPlaying && (
+                  <div className="currently-playing-badge">Now Playing</div>
+                )}
+                <div className="song-title-simple">{song.title}</div>
+                <div className="song-artist-simple">{song.artist}</div>
+              </div>
+              <div className="song-actions">
+                {song.spotifyUrl && (
+                  <a 
+                    href={song.spotifyUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="action-btn spotify-btn"
+                    title="Listen on Spotify"
+                  >
+                    🎵
+                  </a>
+                )}
+                {song.youtubeUrl && (
+                  <a 
+                    href={song.youtubeUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="action-btn youtube-btn"
+                    title="Watch on YouTube"
+                  >
+                    📺
+                  </a>
+                )}
+              </div>
             </div>
-            <div className="song-actions">
-              {song.spotifyUrl && (
-                <a 
-                  href={song.spotifyUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="action-btn spotify-btn"
-                  title="Listen on Spotify"
-                >
-                  🎵
-                </a>
-              )}
-              {song.youtubeUrl && (
-                <a 
-                  href={song.youtubeUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="action-btn youtube-btn"
-                  title="Watch on YouTube"
-                >
-                  📺
-                </a>
-              )}
-            </div>
+            {isCurrentlyPlaying && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
           </div>
           );
         })}

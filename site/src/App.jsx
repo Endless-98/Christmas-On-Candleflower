@@ -3,6 +3,40 @@ import Contact from './Contact';
 import Playlist from './Playlist';
 import { getNextSong, getSongMetadata, songDatabase } from './songData';
 
+function ProgressBar({ timestamp, songDuration, artist }) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Don't show progress for Lanny and Wayne (empty artist)
+    if (!artist || !timestamp || !songDuration) {
+      setProgress(0);
+      return;
+    }
+
+    const updateProgress = () => {
+      const now = Date.now();
+      const songStartedAt = new Date(timestamp).getTime();
+      const elapsed = now - songStartedAt;
+      const progressPercent = Math.min((elapsed / songDuration) * 100, 100);
+      setProgress(progressPercent);
+    };
+
+    updateProgress();
+    const interval = setInterval(updateProgress, 500);
+
+    return () => clearInterval(interval);
+  }, [timestamp, songDuration, artist]);
+
+  // Don't render for Lanny and Wayne
+  if (!artist) return null;
+
+  return (
+    <div className="progress-bar-container">
+      <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+    </div>
+  );
+}
+
 function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading }) {
 
   return (
@@ -11,36 +45,39 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading }) {
       <h2 id="playlist">Now Playing</h2>
       <a href="#/playlist" className="now-playing-link">
         <div className="now-playing">
-          {isLoading ? (
-            <>
-              <div className="np-art np-loading" aria-hidden>
-                <div className="loading-spinner"></div>
-              </div>
-              <div className="np-info">
-                <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
-                <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="np-art" aria-hidden>
-                {nowPlaying.albumArt ? (
-                  <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
-                ) : (
-                  '🎵'
-                )}
-              </div>
-              <div className="np-info">
-                <div className="np-track">{nowPlaying.songTitle}</div>
-                <div className="np-artist muted">{nowPlaying.artist}</div>
-                {nowPlaying.upNext && (
-                  <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
-                    Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
+          <div>
+            {isLoading ? (
+              <>
+                <div className="np-art np-loading" aria-hidden>
+                  <div className="loading-spinner"></div>
+                </div>
+                <div className="np-info">
+                  <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
+                  <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="np-art" aria-hidden>
+                  {nowPlaying.albumArt ? (
+                    <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
+                  ) : (
+                    '🎵'
+                  )}
+                </div>
+                <div className="np-info">
+                  <div className="np-track">{nowPlaying.songTitle}</div>
+                  <div className="np-artist muted">{nowPlaying.artist}</div>
+                  {nowPlaying.upNext && (
+                    <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+                      Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          {!isLoading && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
         </div>
       </a>
 
