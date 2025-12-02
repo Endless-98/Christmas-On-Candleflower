@@ -155,6 +155,24 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   border-radius: 6px;
   font-size: 20px;
 }
+
+.np-loading {
+  background: rgba(255,255,255,0.02);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(56, 189, 248, 0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .np-info {
   flex: 1 1 auto;
 }
