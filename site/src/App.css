@@ -228,8 +228,8 @@ a:hover { color: var(--hover-link); }
 /* Mobile responsive for Now Playing - keep horizontal layout */
 @media (max-width: 640px) {
   .np-art {
-    width: 100px;
-    height: 100px;
+    width: 160px;
+    height: 160px;
     flex-shrink: 0;
   }
   
