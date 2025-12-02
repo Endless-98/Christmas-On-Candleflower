@@ -224,29 +224,26 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
       </ul>
 
       <h2 id="playlist">Now Playing</h2>
-      <div className="now-playing">
-        <div className="np-art" aria-hidden>
-          {nowPlaying.albumArt ? (
-            <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
-          ) : (
-            '🎵'
-          )}
+      <a href="#/playlist" className="now-playing-link">
+        <div className="now-playing">
+          <div className="np-art" aria-hidden>
+            {nowPlaying.albumArt ? (
+              <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
+            ) : (
+              '🎵'
+            )}
+          </div>
+          <div className="np-info">
+            <div className="np-track">{nowPlaying.songTitle}</div>
+            <div className="np-artist muted">{nowPlaying.artist}</div>
+            {nowPlaying.upNext && (
+              <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+                Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="np-info">
-          <div className="np-track">{nowPlaying.songTitle}</div>
-          <div className="np-artist muted">{nowPlaying.artist}</div>
-          {!isLoading && nowPlaying.timestamp && (
-            <div className="np-time muted" style={{fontSize: '0.85rem', marginTop: '0.25rem'}}>
-              Updated: {new Date(nowPlaying.timestamp).toLocaleTimeString('en-US', { timeZone: 'America/Denver' })}
-            </div>
-          )}
-          {nowPlaying.upNext && (
-            <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
-              Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
-            </div>
-          )}
-        </div>
-      </div>
+      </a>
 
       <h2>Location</h2>
       <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>

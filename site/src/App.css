@@ -9,20 +9,29 @@
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; }
 /* Reserve space for the vertical scrollbar so width doesn't shift between pages */
-html { scrollbar-gutter: stable both-edges; }
-body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background-color: var(--bg); color: var(--fg); }
+html { 
+  scrollbar-gutter: stable both-edges;
+  background-color: var(--bg);
+}
+body { 
+  margin: 0; 
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; 
+  background-color: transparent;
+  color: var(--fg);
+}
 
-/* Use a fixed, full-viewport pseudo-element for the background image. This
-   approach works more consistently across mobile browsers (where
-   background-attachment: fixed is often ignored) while keeping the image
-   visually fixed during scroll. */
-body::before {
+/* Use a fixed, full-viewport pseudo-element on HTML for the background image
+   so it fills under the scrollbar gutter. This approach works more consistently 
+   across mobile browsers (where background-attachment: fixed is often ignored) 
+   while keeping the image visually fixed during scroll. */
+html::before {
   content: "";
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   top: auto;
+  width: 100%;
   /* Use a stable viewport height to avoid jumping when browser chrome shows/hides */
   height: 100vh;   /* fallback */
   height: 100dvh;  /* dynamic viewport (supported browsers) */
@@ -33,6 +42,8 @@ body::before {
   background-size: cover;
   z-index: -1;
   pointer-events: none;
+  /* Mobile viewport compensation */
+  transform: translateY(var(--vv-offset, 0));
 }
 
 .container { max-width: 760px; margin: 0 auto; padding: 2rem; }
@@ -106,6 +117,22 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
 .map-wrapper { margin-top: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid #1f2937; }
 .map-wrapper iframe { width: 100%; height: 320px; border: 0; display: block; }
 
+.now-playing-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.now-playing-link:hover {
+  transform: translateY(-2px);
+}
+
+.now-playing-link:hover .now-playing {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
 .now-playing {
   display: flex;
   align-items: center;
@@ -116,6 +143,7 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   border-radius: 8px;
   max-width: 720px;
   margin: 0.5rem auto 1rem;
+  transition: all 0.2s ease;
 }
 .np-art {
   width: 160px;
