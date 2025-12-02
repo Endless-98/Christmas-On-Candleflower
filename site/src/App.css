@@ -365,18 +365,16 @@ a:hover { color: var(--hover-link); }
   margin-bottom: 0.25rem;
   color: var(--fg);
   line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .song-artist-simple {
   font-size: clamp(0.85rem, 2.5vw, 1.275rem);
   color: var(--muted);
   line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .song-actions {
