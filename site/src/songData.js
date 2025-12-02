@@ -11,8 +11,8 @@ export const songDatabase = {
     displayName: "Even Better Christmas",
     artist: "Gracechase",
     albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
-    spotifyUrl: "https://open.spotify.com/track/placeholder1",
-    youtubeMusicUrl: "https://music.youtube.com/watch?v=placeholder1"
+    spotifyUrl: "https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC",
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=4uLU6hMCjMI75M1A2tKUQC"
   },
   "03 - Transition 1": {
     displayName: "Lanny and Wayne",
@@ -58,7 +58,9 @@ export const songDatabase = {
   "Star Wars Medley": {
     displayName: "Star Wars Medley",
     artist: "John Williams",
-    albumArt: "/assets/AlbumImages/Star Wars OST.png"
+    albumArt: "/assets/AlbumImages/Star Wars OST.png",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "11 - Transition 5": {
     displayName: "Lanny and Wayne",
@@ -68,7 +70,9 @@ export const songDatabase = {
   "God Rest Ye Merry Gentlemen": {
     displayName: "God Rest Ye Merry Gentlemen",
     artist: "Pentatonix",
-    albumArt: "/assets/AlbumImages/The Best of Pentatonix Christmas - Pentatonix.png"
+    albumArt: "/assets/AlbumImages/The Best of Pentatonix Christmas - Pentatonix.png",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "13 - Transition 6": {
     displayName: "Lanny and Wayne",
@@ -78,7 +82,9 @@ export const songDatabase = {
   "Christmas Party (All the Way)": {
     displayName: "Christmas Party (All the Way)",
     artist: "Gracechase",
-    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "15 - Transition 7": {
     displayName: "Lanny and Wayne",
@@ -88,7 +94,9 @@ export const songDatabase = {
   "Sounding Joy": {
     displayName: "Sounding Joy",
     artist: "Ellie Holcomb",
-    albumArt: "/assets/AlbumImages/Sounding Joy - Ellie Holcomb.jpg"
+    albumArt: "/assets/AlbumImages/Sounding Joy - Ellie Holcomb.jpg",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "17 - Transition 8": {
     displayName: "Lanny and Wayne",
@@ -98,7 +106,9 @@ export const songDatabase = {
   "Light of Christmas": {
     displayName: "Light of Christmas",
     artist: "TobyMac",
-    albumArt: "/assets/AlbumImages/Light of Christmas - Toby Mac.jpg"
+    albumArt: "/assets/AlbumImages/Light of Christmas - Toby Mac.jpg",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "19 - Transition 9": {
     displayName: "Lanny and Wayne",
@@ -108,7 +118,9 @@ export const songDatabase = {
   "Ring the Bells": {
     displayName: "Ring the Bells",
     artist: "Big Daddy Weave ft. Meridith Andrews",
-    albumArt: "/assets/AlbumImages/Ring The Bells - Big Daddy Weeve.png"
+    albumArt: "/assets/AlbumImages/Ring The Bells - Big Daddy Weeve.png",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "23 - Transition 11": {
     displayName: "Lanny and Wayne",
@@ -118,7 +130,9 @@ export const songDatabase = {
   "Call of Duty": {
     displayName: "Call of Duty Medley",
     artist: "Call of Duty",
-    albumArt: "/assets/AlbumImages/Call of Duty Black Ops 7 OST - Jack Wall.png"
+    albumArt: "/assets/AlbumImages/Call of Duty Black Ops 7 OST - Jack Wall.png",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "25 - Transition 12": {
     displayName: "Lanny and Wayne",
@@ -128,7 +142,9 @@ export const songDatabase = {
   "Joy He Shall Reign": {
     displayName: "Joy! He Shall Reign",
     artist: "Big Daddy Weave",
-    albumArt: "/assets/AlbumImages/BigDaddyWeave - Joy He Shall Reign.png"
+    albumArt: "/assets/AlbumImages/BigDaddyWeave - Joy He Shall Reign.png",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "27 - Transition 13": {
     displayName: "Lanny and Wayne",
@@ -138,7 +154,9 @@ export const songDatabase = {
   "Christmas Every Day": {
     displayName: "Christmas Every Day",
     artist: "Simple Plan",
-    albumArt: "/assets/AlbumImages/Simple Plan - Christmas Every Day.jpg"
+    albumArt: "/assets/AlbumImages/Simple Plan - Christmas Every Day.jpg",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "29 - Transition 14": {
     displayName: "Lanny and Wayne",
@@ -148,7 +166,9 @@ export const songDatabase = {
   "To Hear the Angels Sing": {
     displayName: "To Hear the Angels Sing",
     artist: "Gracechase",
-    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg"
+    albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
+    spotifyUrl: "https://open.spotify.com/",
+    youtubeMusicUrl: "https://music.youtube.com/"
   },
   "31 - Outro": {
     displayName: "Lanny and Wayne",

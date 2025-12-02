@@ -106,7 +106,7 @@ export default function Playlist({ nowPlaying }) {
                     className="action-btn spotify-btn"
                     title="Listen on Spotify"
                   >
-                    🎵
+                    <img src="/assets/link-icons/spotify_logo.png" alt="Spotify" />
                   </a>
                 )}
                 {song.youtubeMusicUrl && (
@@ -117,7 +117,7 @@ export default function Playlist({ nowPlaying }) {
                     className="action-btn youtube-btn"
                     title="Listen on YouTube Music"
                   >
-                    📺
+                    <img src="/assets/link-icons/YT_music_logo.png" alt="YouTube Music" />
                   </a>
                 )}
               </div>
