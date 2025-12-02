@@ -156,8 +156,8 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   flex: 1;
 }
 .np-art {
-  width: 144px;
-  height: 144px;
+  width: 160px;
+  height: 160px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
