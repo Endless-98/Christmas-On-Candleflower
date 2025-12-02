@@ -233,6 +233,11 @@ a:hover { color: var(--hover-link); }
     flex-shrink: 0;
   }
   
+  .now-playing > :first-child {
+    padding: 8px;
+    gap: 8px;
+  }
+  
   .now-playing {
     gap: 10px;
     padding: 12px;
