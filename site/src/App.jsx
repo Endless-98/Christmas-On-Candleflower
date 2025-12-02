@@ -214,14 +214,6 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
 
   return (
     <section style={{marginTop: '1rem'}}>
-      <p> 
-        Welcome! We're excited to share the joy of Christ's birth through our Christmas light show. Join us nightly from 5:00 PM to 10:00 PM throughout December as we celebrate the season with music, lights, and the love of our Savior.
-      </p>
-
-      <h2>Schedule</h2>
-      <ul className="items">
-        <li>Daily: 5:00 PM — 10:00 PM</li>
-      </ul>
 
       <h2 id="playlist">Now Playing</h2>
       <a href="#/playlist" className="now-playing-link">
@@ -258,6 +250,11 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
           )}
         </div>
       </a>
+
+      <h2>Schedule</h2>
+      <ul className="items">
+        <li>Daily: 5:00 PM — 10:00 PM</li>
+      </ul>
 
       <h2>Location</h2>
       <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
