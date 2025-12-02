@@ -55,6 +55,9 @@ export default function Playlist({ nowPlaying }) {
             )}
             <div className="song-number">{index + 1}</div>
             <div className="song-details">
+              {isCurrentlyPlaying && (
+                <div className="currently-playing-badge">Currently Playing</div>
+              )}
               <div className="song-title-simple">{song.title}</div>
               <div className="song-artist-simple">{song.artist}</div>
             </div>
