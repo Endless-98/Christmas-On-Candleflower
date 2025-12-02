@@ -90,7 +90,6 @@ export default function Playlist({ nowPlaying }) {
               {song.albumArt && (
                 <img src={song.albumArt} alt={`${song.title} album art`} className="song-album-art" />
               )}
-              <div className="song-number">{index + 1}</div>
               <div className="song-details">
                 {isCurrentlyPlaying && (
                   <div className="currently-playing-badge">Now Playing</div>
@@ -122,6 +121,7 @@ export default function Playlist({ nowPlaying }) {
                   </a>
                 )}
               </div>
+              <div className="song-number">{index + 1}</div>
             </div>
             {isCurrentlyPlaying && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
           </div>
