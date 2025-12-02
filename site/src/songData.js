@@ -109,7 +109,7 @@ export const songDatabase = {
   },
   "Call of Duty": {
     displayName: "Call of Duty Medley",
-    artist: "Black Ops 7",
+    artist: "Call of Duty",
     albumArt: "/assets/AlbumImages/Call of Duty Black Ops 7 OST - Jack Wall.png"
   },
   "25 - Transition 12": {

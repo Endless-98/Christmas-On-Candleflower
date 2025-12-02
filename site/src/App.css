@@ -359,7 +359,7 @@ a:hover { color: var(--hover-link); }
 }
 
 .song-title-simple {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   font-weight: 600;
   margin-bottom: 0.25rem;
   color: var(--fg);
@@ -370,7 +370,7 @@ a:hover { color: var(--hover-link); }
 }
 
 .song-artist-simple {
-  font-size: 1.275rem;
+  font-size: clamp(0.85rem, 2.5vw, 1.275rem);
   color: var(--muted);
   line-height: 1.2;
   word-wrap: break-word;
@@ -450,15 +450,13 @@ a:hover { color: var(--hover-link); }
 
 /* Responsive playlist layout */
 @media (max-width: 640px) {
-  .song-simple {
-    gap: 0.75rem;
-    padding: 0.75rem;
-    min-height: 136px;
+  .song-simple > :first-child {
+    padding: 0.65rem;
   }
   
   .song-album-art {
-    width: 112px;
-    height: 112px;
+    width: 100px;
+    height: 100px;
   }
   
   .song-number {
@@ -468,12 +466,12 @@ a:hover { color: var(--hover-link); }
   }
   
   .song-title-simple {
-    font-size: 1.35rem;
+    font-size: clamp(0.85rem, 4vw, 1.1rem);
     line-height: 1.2;
   }
   
   .song-artist-simple {
-    font-size: 1.2rem;
+    font-size: clamp(0.75rem, 3.5vw, 1rem);
     line-height: 1.1;
   }
   
