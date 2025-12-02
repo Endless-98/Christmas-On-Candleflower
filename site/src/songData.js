@@ -163,7 +163,7 @@ export const songDatabase = {
 export const playlistOrder = [
   "Countdown",
   "01 - Intro",
-  "Gracechase - EventBetterChristmas",
+  "Gracechase - EvenBetterChristmas",
   "03 - Transition 1",
   "All I Need For Christmas",
   "05 - Transition 2",
