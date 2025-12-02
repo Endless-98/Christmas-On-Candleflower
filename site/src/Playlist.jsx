@@ -55,10 +55,10 @@ export default function Playlist({ nowPlaying }) {
             )}
             <div className="song-number">{index + 1}</div>
             <div className="song-details">
-              <div className="song-title-simple">
-                {isCurrentlyPlaying && <span className="currently-playing-badge">Now Playing</span>}
-                {song.title}
-              </div>
+              {isCurrentlyPlaying && (
+                <div className="currently-playing-badge">Now Playing</div>
+              )}
+              <div className="song-title-simple">{song.title}</div>
               <div className="song-artist-simple">{song.artist}</div>
             </div>
             <div className="song-actions">
