@@ -262,7 +262,7 @@ a:hover { color: var(--hover-link); }
 .song-simple > :first-child {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.65rem 1rem;
   gap: 1rem;
   flex: 1;
 }
