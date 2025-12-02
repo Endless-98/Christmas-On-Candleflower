@@ -411,8 +411,10 @@ export default function App() {
     }, []);
 
     return (
-      <div className="container">
-        <header>
+      <>
+        <div className="background-container"></div>
+        <div className="container">
+          <header>
           <div>
             <h1 className="site-title">
               <img src={`${import.meta.env.BASE_URL}assets/CoCLWLogo.png`} alt="Christmas On Candleflower" />
@@ -430,6 +432,7 @@ export default function App() {
         {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
         {/* default fallback: home */}
         {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
-      </div>
+        </div>
+      </>
     );
   }
