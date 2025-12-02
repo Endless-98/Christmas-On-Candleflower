@@ -15,7 +15,9 @@ function ProgressBar({ timestamp, songDuration, artist }) {
       const now = Date.now();
       const songStartedAt = new Date(timestamp).getTime();
       const elapsed = now - songStartedAt;
-      const progressPercent = Math.min((elapsed / songDuration) * 100, 100);
+      // songDuration is in seconds, convert to milliseconds
+      const durationMs = songDuration * 1000;
+      const progressPercent = Math.min((elapsed / durationMs) * 100, 100);
       setProgress(progressPercent);
     };
 
