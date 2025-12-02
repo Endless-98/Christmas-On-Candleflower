@@ -12,7 +12,7 @@ export const songDatabase = {
     artist: "Gracechase",
     albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
     spotifyUrl: "https://open.spotify.com/track/7tOPfkT7djRnm7l1wfJmrR",
-    youtubeMusicUrl: "https://music.youtube.com/watch?v=oDpwGMRPZ_Y"
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=vkvwsYw-nm8"
   },
   "03 - Transition 1": {
     displayName: "Lanny and Wayne",
@@ -168,7 +168,7 @@ export const songDatabase = {
     artist: "Gracechase",
     albumArt: "/assets/AlbumImages/Even Better Christmas - Gracechase.jpg",
     spotifyUrl: "https://open.spotify.com/track/3yFzorHNkLzw4D5qCbeQA3",
-    youtubeMusicUrl: "https://music.youtube.com/watch?v=AhUv89IiQ3I"
+    youtubeMusicUrl: "https://music.youtube.com/watch?v=vkvwsYw-nm8"
   },
   "31 - Outro": {
     displayName: "Lanny and Wayne",
