@@ -9,7 +9,9 @@
 * { box-sizing: border-box; }
 h2 { border: none; border-top: none; padding-top: 0; }
 html, body, #root { height: 100%; }
+/* Reserve space for the vertical scrollbar so width doesn't shift between pages */
 html { 
+  scrollbar-gutter: stable both-edges;
   background-color: var(--bg);
 }
 body { 
