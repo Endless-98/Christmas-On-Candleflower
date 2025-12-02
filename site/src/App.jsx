@@ -3,7 +3,93 @@ import Contact from './Contact';
 import Playlist from './Playlist';
 import { getNextSong, getSongMetadata, songDatabase } from './songData';
 
-function Home({ mapSrc, nowPlaying, setNowPlaying }) {
+function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading }) {
+
+  return (
+    <section style={{marginTop: '1rem'}}>
+
+      <h2 id="playlist">Now Playing</h2>
+      <a href="#/playlist" className="now-playing-link">
+        <div className="now-playing">
+          {isLoading ? (
+            <>
+              <div className="np-art np-loading" aria-hidden>
+                <div className="loading-spinner"></div>
+              </div>
+              <div className="np-info">
+                <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
+                <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="np-art" aria-hidden>
+                {nowPlaying.albumArt ? (
+                  <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
+                ) : (
+                  '🎵'
+                )}
+              </div>
+              <div className="np-info">
+                <div className="np-track">{nowPlaying.songTitle}</div>
+                <div className="np-artist muted">{nowPlaying.artist}</div>
+                {nowPlaying.upNext && (
+                  <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+                    Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </a>
+
+      <h2>Schedule</h2>
+      <ul className="items">
+        <li>Daily: 5:00 PM — 10:00 PM</li>
+      </ul>
+
+      <h2>Location</h2>
+      <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
+
+      <div className="map-wrapper" aria-hidden={!mapSrc}>
+        {mapSrc ? (
+          <iframe
+            title="Candleflower location"
+            src={mapSrc}
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        ) : (
+          <div className="muted" style={{marginTop: '0.5rem'}}>
+            Map is not configured. Set one of VITE_MAP_EMBED_URL, VITE_GOOGLE_MAPS_IFRAME_URL, or VITE_MAP_QUERY in the build environment.
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export default function App() {
+  const [route, setRoute] = useState(() => {
+    const hash = window.location.hash || '#/';
+    return hash.replace(/^#/, '') || '/';
+  });
+  
+  // Shared state for now playing across all components
+  const [nowPlaying, setNowPlaying] = useState({
+    songTitle: 'No track playing',
+    artist: 'Not connected',
+    albumArt: '',
+    timestamp: null,
+    showStatus: null,
+    upNext: null
+  });
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -211,91 +297,6 @@ function Home({ mapSrc, nowPlaying, setNowPlaying }) {
       }
     };
   }, []);
-
-  return (
-    <section style={{marginTop: '1rem'}}>
-
-      <h2 id="playlist">Now Playing</h2>
-      <a href="#/playlist" className="now-playing-link">
-        <div className="now-playing">
-          {isLoading ? (
-            <>
-              <div className="np-art np-loading" aria-hidden>
-                <div className="loading-spinner"></div>
-              </div>
-              <div className="np-info">
-                <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
-                <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="np-art" aria-hidden>
-                {nowPlaying.albumArt ? (
-                  <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
-                ) : (
-                  '🎵'
-                )}
-              </div>
-              <div className="np-info">
-                <div className="np-track">{nowPlaying.songTitle}</div>
-                <div className="np-artist muted">{nowPlaying.artist}</div>
-                {nowPlaying.upNext && (
-                  <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
-                    Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      </a>
-
-      <h2>Schedule</h2>
-      <ul className="items">
-        <li>Daily: 5:00 PM — 10:00 PM</li>
-      </ul>
-
-      <h2>Location</h2>
-      <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
-
-      <div className="map-wrapper" aria-hidden={!mapSrc}>
-        {mapSrc ? (
-          <iframe
-            title="Candleflower location"
-            src={mapSrc}
-            width="600"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        ) : (
-          <div className="muted" style={{marginTop: '0.5rem'}}>
-            Map is not configured. Set one of VITE_MAP_EMBED_URL, VITE_GOOGLE_MAPS_IFRAME_URL, or VITE_MAP_QUERY in the build environment.
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-export default function App() {
-  const [route, setRoute] = useState(() => {
-    const hash = window.location.hash || '#/';
-    return hash.replace(/^#/, '') || '/';
-  });
-  
-  // Shared state for now playing across all components
-  const [nowPlaying, setNowPlaying] = useState({
-    songTitle: 'No track playing',
-    artist: 'Not connected',
-    albumArt: '',
-    timestamp: null,
-    showStatus: null,
-    upNext: null
-  });
   
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
@@ -387,9 +388,9 @@ export default function App() {
 
         {route === '/playlist' && <Playlist nowPlaying={nowPlaying} />}
         {route === '/contact' && <Contact />}
-        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
+        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
       </div>
     );
   }
