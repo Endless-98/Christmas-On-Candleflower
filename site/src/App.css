@@ -66,10 +66,10 @@ header nav .nav-link.active:hover {
 
 /* Logo sizing inside the h1 - keeps semantics but uses an image */
 .site-title { margin: 0; }
-.site-title img { height: calc(48px * 2); width: auto; display: block; transform-origin: left center; }
+.site-title img { height: calc(80px * 2); width: auto; display: block; transform-origin: left center; }
 
 @media (min-width: 900px) {
-  .site-title img { height: calc(56px * 2); }
+  .site-title img { height: calc(96px * 2); }
 }
 
 /* Slight visual segmentation between title and nav on wider screens */
@@ -118,8 +118,8 @@ header > div { padding-right: 0.75rem; margin-right: 0.5rem; border-right: 1px s
   margin: 0.5rem auto 1rem;
 }
 .np-art {
-  width: 80px;
-  height: 80px;
+  width: 160px;
+  height: 160px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@ a:hover { color: var(--hover-link); }
   border-radius: 12px;
   transition: all 0.2s ease;
   gap: 1rem;
-  min-height: 96px;
+  min-height: 168px;
 }
 
 .song-simple:hover {
@@ -175,8 +175,8 @@ a:hover { color: var(--hover-link); }
 }
 
 .song-album-art {
-  width: 72px;
-  height: 72px;
+  width: 144px;
+  height: 144px;
   border-radius: 8px;
   object-fit: cover;
   border: 1px solid rgba(255,255,255,0.1);
@@ -306,12 +306,12 @@ a:hover { color: var(--hover-link); }
   .song-simple {
     gap: 0.75rem;
     padding: 0.75rem;
-    min-height: 80px;
+    min-height: 136px;
   }
   
   .song-album-art {
-    width: 56px;
-    height: 56px;
+    width: 112px;
+    height: 112px;
   }
   
   .song-number {
