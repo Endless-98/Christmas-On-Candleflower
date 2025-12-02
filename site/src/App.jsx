@@ -421,7 +421,7 @@ export default function App() {
           <nav aria-label="Primary">
             <a href="#/" className={route === '/' ? 'nav-link active' : 'nav-link'}>Home</a>
             <a href="#/playlist" className={route === '/playlist' ? 'nav-link active' : 'nav-link'}>Playlist</a>
-            <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact Us</a>
+            <a href="#/contact" className={route === '/contact' ? 'nav-link active' : 'nav-link'}>Contact</a>
           </nav>
         </header>
 
