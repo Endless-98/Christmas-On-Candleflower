@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { songDatabase, playlistOrder } from './songData';
 
 export default function Playlist({ nowPlaying }) {
+  const nowPlayingRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the currently playing song when the component mounts or nowPlaying changes
+    if (nowPlayingRef.current) {
+      setTimeout(() => {
+        nowPlayingRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 100);
+    }
+  }, [nowPlaying?.songTitle]);
   // Build songs array from the songDatabase, excluding system/transition tracks
   if (!playlistOrder || !songDatabase) {
     console.error('songData not loaded properly');
@@ -32,7 +45,11 @@ export default function Playlist({ nowPlaying }) {
         {songs.map((song, index) => {
           const isCurrentlyPlaying = nowPlaying?.songTitle === song.title;
           return (
-          <div key={index} className={`song-simple ${isCurrentlyPlaying ? 'now-playing-highlight' : ''}`}>
+          <div 
+            key={index} 
+            className={`song-simple ${isCurrentlyPlaying ? 'now-playing-highlight' : ''}`}
+            ref={isCurrentlyPlaying ? nowPlayingRef : null}
+          >
             {song.albumArt && (
               <img src={song.albumArt} alt={`${song.title} album art`} className="song-album-art" />
             )}
