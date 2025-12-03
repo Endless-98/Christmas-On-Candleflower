@@ -39,49 +39,53 @@ function ProgressBar({ timestamp, songDuration, artist }) {
   );
 }
 
-function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading }) {
+function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) {
 
   return (
     <section style={{marginTop: '1rem'}}>
 
-      <h2 id="playlist">Now Playing</h2>
-      <a href="#/playlist" className="now-playing-link">
-        <div className="now-playing">
-          <div>
-            {isLoading ? (
-              <>
-                <div className="np-art np-loading" aria-hidden>
-                  <div className="loading-spinner"></div>
-                </div>
-                <div className="np-info">
-                  <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
-                  <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="np-art" aria-hidden>
-                  {nowPlaying.albumArt ? (
-                    <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
-                  ) : (
-                    '🎵'
-                  )}
-                </div>
-                <div className="np-info">
-                  <div className="np-track">{nowPlaying.songTitle}</div>
-                  <div className="np-artist muted">{nowPlaying.artist}</div>
-                  {nowPlaying.upNext && (
-                    <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
-                      Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+      {showNowPlaying && (
+        <>
+          <h2 id="playlist">Now Playing</h2>
+          <a href="#/playlist" className="now-playing-link">
+            <div className="now-playing">
+              <div>
+                {isLoading ? (
+                  <>
+                    <div className="np-art np-loading" aria-hidden>
+                      <div className="loading-spinner"></div>
                     </div>
-                  )}
-                </div>
-              </>
-            )}
-          </div>
-          {!isLoading && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
-        </div>
-      </a>
+                    <div className="np-info">
+                      <div className="np-track" style={{opacity: 0.5}}>Loading...</div>
+                      <div className="np-artist muted" style={{opacity: 0.5}}>Checking what's playing</div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="np-art" aria-hidden>
+                      {nowPlaying.albumArt ? (
+                        <img src={nowPlaying.albumArt} alt="Album art" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px'}} />
+                      ) : (
+                        '🎵'
+                      )}
+                    </div>
+                    <div className="np-info">
+                      <div className="np-track">{nowPlaying.songTitle}</div>
+                      <div className="np-artist muted">{nowPlaying.artist}</div>
+                      {nowPlaying.upNext && (
+                        <div className="np-up-next muted" style={{fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.6}}>
+                          Up Next: {nowPlaying.upNext.displayName}{nowPlaying.upNext.artist && ` · ${nowPlaying.upNext.artist}`}
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+              {!isLoading && <ProgressBar timestamp={nowPlaying.timestamp} songDuration={nowPlaying.songDuration} artist={nowPlaying.artist} />}
+            </div>
+          </a>
+        </>
+      )}
 
       <h2>Schedule</h2>
       <ul className="items">
@@ -130,10 +134,12 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
+  const [showNowPlaying, setShowNowPlaying] = useState(false); // Start hidden, will show if conditions are met
 
   useEffect(() => {
     let timeoutId = null;
     let retryCount = 0;
+    let staleCount = 0; // Track consecutive stale data encounters
     let lastFetchedData = null;
     let debugMode = false;
 
@@ -188,6 +194,7 @@ export default function App() {
           upNext: null
         });
         setIsLoading(false);
+        setShowNowPlaying(false); // Hide Now Playing section when show is inactive
         
         // Check again in 5 minutes
         timeoutId = setTimeout(() => fetchNowPlaying(), 5 * 60 * 1000);
@@ -253,10 +260,12 @@ export default function App() {
             console.log(`✅ Fresh data received after ${retryCount} retries`);
           }
           retryCount = 0;
+          staleCount = 0; // Reset stale counter on new data
           lastFetchedData = dataString;
         } else if (!isStaleData) {
           // Same data but still valid (within grace period) - reset retry counter
           retryCount = 0;
+          staleCount = 0; // Reset stale counter
           lastFetchedData = dataString;
         }
         // If isSameData && isStaleData: keep retry counter, will use exponential backoff below
@@ -286,6 +295,9 @@ export default function App() {
         });
         setIsLoading(false);
         
+        // Show Now Playing if we haven't seen 3 consecutive stale data points
+        setShowNowPlaying(staleCount < 3);
+        
         // Schedule next check with intelligent retry logic
         let nextCheckIn;
         let shouldRetry = false;
@@ -293,6 +305,13 @@ export default function App() {
         if (isStaleData) {
           // Data is stale - use exponential backoff
           retryCount++;
+          staleCount++; // Increment stale counter
+          
+          // Hide Now Playing after 3 consecutive stale data encounters
+          if (staleCount >= 3) {
+            console.warn(`🚫 Hiding Now Playing section after ${staleCount} consecutive stale data encounters`);
+            setShowNowPlaying(false);
+          }
           
           let waitTime;
           if (retryCount >= 10) {
@@ -300,7 +319,7 @@ export default function App() {
             console.warn(`🔴 STALE DATA: Retry ${retryCount}. Waiting 15 minutes before next attempt.`);
           } else {
             waitTime = Math.min(Math.pow(2, retryCount) * 1000, 512000); // Cap at ~8.5 minutes
-            console.warn(`⚠️ STALE DATA: Song ended ${Math.abs(secondsRemaining)}s ago. Retry ${retryCount}: waiting ${waitTime / 1000}s`);
+            console.warn(`⚠️ STALE DATA: Song ended ${Math.abs(secondsRemaining)}s ago. Retry ${retryCount}, Stale count: ${staleCount}. Waiting ${waitTime / 1000}s`);
           }
           
           nextCheckIn = waitTime / 1000;
@@ -427,9 +446,9 @@ export default function App() {
 
         {route === '/playlist' && <Playlist nowPlaying={nowPlaying} />}
         {route === '/contact' && <Contact />}
-        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
+        {route === '/' && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} showNowPlaying={showNowPlaying} />}
         {/* default fallback: home */}
-        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} />}
+        {(route !== '/' && route !== '/playlist' && route !== '/contact') && <Home mapSrc={mapSrc} nowPlaying={nowPlaying} setNowPlaying={setNowPlaying} isLoading={isLoading} showNowPlaying={showNowPlaying} />}
       </div>
     );
   }
