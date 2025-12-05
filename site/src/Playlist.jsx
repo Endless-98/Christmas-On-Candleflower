@@ -54,7 +54,7 @@ export default function Playlist({ nowPlaying }) {
   // Build songs array from the songDatabase, excluding system/transition tracks
   if (!playlistOrder || !songDatabase) {
     console.error('songData not loaded properly');
-    return <section style={{marginTop: '1rem'}}><h2>Our Christmas Playlist</h2><p>Loading...</p></section>;
+    return <section style={{marginTop: '1rem'}}><h2>Our Christmas Playlist-</h2><p>Loading...</p></section>;
   }
 
   const songs = playlistOrder
@@ -76,8 +76,8 @@ export default function Playlist({ nowPlaying }) {
 
   return (
     <section style={{marginTop: '1rem'}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-        <h2 style={{margin: 0}}>Our Christmas Playlist</h2>
+      <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+        <h2 style={{margin: 0}}>Our Christmas Playlist  -</h2>
         <a 
           href="https://open.spotify.com/playlist/46VLQ2Ogiw46cMVjO4fM3p" 
           target="_blank" 

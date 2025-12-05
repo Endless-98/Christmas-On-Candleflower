@@ -9,9 +9,7 @@
 * { box-sizing: border-box; }
 h2 { border: none; border-top: none; padding-top: 0; }
 html, body, #root { height: 100%; }
-/* Reserve space for the vertical scrollbar so width doesn't shift between pages */
 html { 
-  scrollbar-gutter: stable both-edges;
   background-color: var(--bg);
 }
 body { 
@@ -21,30 +19,21 @@ body {
   color: var(--fg);
 }
 
-/* Use a fixed, full-viewport pseudo-element on HTML for the background image
+/* Use a fixed, full-viewport pseudo-element on HTML for the background gradient
    so it fills under the scrollbar gutter. This approach works more consistently 
-   across mobile browsers (where background-attachment: fixed is often ignored) 
-   while keeping the image visually fixed during scroll. */
+   across mobile browsers while keeping the background visually fixed during scroll. */
 html::before {
   content: "";
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  top: auto;
+  top: 0;
   width: 100%;
-  /* Use a stable viewport height to avoid jumping when browser chrome shows/hides */
-  height: 100vh;   /* fallback */
-  height: 100dvh;  /* dynamic viewport (supported browsers) */
-  height: 100svh;  /* stable/smallest viewport to prevent resize jumps */
-  background-image: var(--bg-img-url);
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: cover;
+  height: 100%;
+  background: linear-gradient(to right, rgb(113, 52, 83), rgb(13, 108, 162));
   z-index: -1;
   pointer-events: none;
-  /* Mobile viewport compensation */
-  transform: translateY(var(--vv-offset, 0));
 }
 
 .container { max-width: 760px; margin: 0 auto; padding: 1rem 2rem 2rem 2rem; }
@@ -382,14 +371,14 @@ a:hover { color: var(--hover-link); }
 .song-actions {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   align-items: center;
 }
 
 .action-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 20%;
+  width: 53px;
+  height: 53px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -406,7 +395,7 @@ a:hover { color: var(--hover-link); }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 20%;
+  border-radius: 0;
 }
 
 .action-btn:hover {
@@ -474,8 +463,8 @@ a:hover { color: var(--hover-link); }
   }
   
   .action-btn {
-    width: 38px;
-    height: 38px;
+    width: 48px;
+    height: 48px;
     font-size: 1rem;
   }
   

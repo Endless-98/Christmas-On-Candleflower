@@ -113,6 +113,34 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) 
           </div>
         )}
       </div>
+
+      <h2>Official Gracechase Videos</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div className="map-wrapper" style={{ aspectRatio: '16/9' }}>
+          <iframe
+            title="Christmas light show video 1"
+            src="https://www.youtube.com/embed/Z-NfhHJEkPY"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          />
+        </div>
+        <div className="map-wrapper" style={{ aspectRatio: '16/9' }}>
+          <iframe
+            title="Christmas light show video 2"
+            src="https://www.youtube.com/embed/oSyapU4abxA"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          />
+        </div>
+      </div>
     </section>
   );
 }
