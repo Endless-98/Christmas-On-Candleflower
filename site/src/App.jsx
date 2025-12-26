@@ -89,9 +89,10 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) 
 
       <h2>Schedule</h2>
       <ul className="items">
-        <li>Daily: 5:00 PM — 10:00 PM</li>
+        <li>Thank you for celebrating Christmas with us! See you next year!</li>
       </ul>
 
+      {/*
       <h2>Location</h2>
       <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
 
@@ -113,6 +114,7 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) 
           </div>
         )}
       </div>
+      */}
 
       <h2>Official Gracechase Videos</h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -180,25 +182,26 @@ export default function App() {
     };
 
     const isShowTime = () => {
+      return { active: false, message: 'The show has ended for the season. See you next year!' };
       // Get current time in Mountain Time
-      const now = new Date();
-      const mtTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Denver' }));
-      const hour = mtTime.getHours();
-      const month = mtTime.getMonth(); // 0-indexed: December = 11
+      // const now = new Date();
+      // const mtTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Denver' }));
+      // const hour = mtTime.getHours();
+      // const month = mtTime.getMonth(); // 0-indexed: December = 11
       
-      // Only run in December
-      if (month !== 11) {
-        return { active: false, message: 'Show runs in December only' };
-      }
+      // // Only run in December
+      // if (month !== 11) {
+      //   return { active: false, message: 'Show runs in December only' };
+      // }
       
-      // Show runs 5PM - 10PM
-      if (hour < 17) {
-        return { active: false, message: 'Show starts at 5:00 PM' };
-      } else if (hour >= 22) {
-        return { active: false, message: 'Show ended at 10:00 PM' };
-      }
+      // // Show runs 5PM - 10PM
+      // if (hour < 17) {
+      //   return { active: false, message: 'Show starts at 5:00 PM' };
+      // } else if (hour >= 22) {
+      //   return { active: false, message: 'Show ended at 10:00 PM' };
+      // }
       
-      return { active: true, message: null };
+      // return { active: true, message: null };
     };
 
     const fetchNowPlaying = async (isRetry = false) => {
@@ -384,6 +387,7 @@ export default function App() {
     };
   }, []);
   
+  /*
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
@@ -410,6 +414,8 @@ export default function App() {
     } else {
       mapSrc = '';
     }
+  */
+  const mapSrc = '';
     useEffect(() => {
       const onHash = () => {
         const hash = window.location.hash || '#/';
