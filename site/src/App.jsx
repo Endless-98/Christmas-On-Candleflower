@@ -92,6 +92,7 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) 
         <li>Thank you for celebrating Christmas with us! See you next year!</li>
       </ul>
 
+      {/*
       <h2>Location</h2>
       <p className="muted">{import.meta.env.VITE_MAP_QUERY}</p>
 
@@ -113,6 +114,7 @@ function Home({ mapSrc, nowPlaying, setNowPlaying, isLoading, showNowPlaying }) 
           </div>
         )}
       </div>
+      */}
 
       <h2>Official Gracechase Videos</h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -385,6 +387,7 @@ export default function App() {
     };
   }, []);
   
+  /*
   const rawQuery = import.meta.env.VITE_MAP_QUERY || '';
   const encodedQuery = rawQuery ? encodeURIComponent(rawQuery) : '';
 
@@ -411,6 +414,8 @@ export default function App() {
     } else {
       mapSrc = '';
     }
+  */
+  const mapSrc = '';
     useEffect(() => {
       const onHash = () => {
         const hash = window.location.hash || '#/';

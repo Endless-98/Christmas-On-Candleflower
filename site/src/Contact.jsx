@@ -24,6 +24,7 @@ export default function Contact() {
     try {
       const response = await fetch('https://eykveoan7cjc745m7twnh2hof40raaok.lambda-url.us-east-1.on.aws/', {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
