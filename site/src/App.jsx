@@ -468,7 +468,7 @@ export default function App() {
         <header>
           <div>
             <h1 className="site-title">
-              <img src={`${import.meta.env.BASE_URL}assets/CoCLWLogo.png`} alt="Christmas On Candleflower" />
+              <img src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="Christmas On Candleflower" />
             </h1>
           </div>
           <nav aria-label="Primary">
